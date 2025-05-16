@@ -1193,6 +1193,53 @@ if (texte && texte.startsWith('>')) {
   }
 }
 
+  /************************ anti-delete-message */
+
+            if(ms.message.protocolMessage && ms.message.protocolMessage.type === 0 && (conf.FREDI_DELETE).toLocaleLowerCase() === 'yes' ) {
+
+                if(ms.key.fromMe || ms.message.protocolMessage.key.fromMe) { console.log('Message supprimer me concernant') ; return }
+        
+                                console.log(`Message supprimer`)
+                                let key =  ms.message.protocolMessage.key ;
+                                
+        
+                               try {
+        
+                                  let st = './store.json' ;
+        
+                                const data = fs.readFileSync(st, 'utf8');
+        
+                                const jsonData = JSON.parse(data);
+        
+                                    let message = jsonData.messages[key.remoteJid] ;
+                                
+                                    let msg ;
+        
+                                    for (let i = 0 ; i < message.length ; i++) {
+        
+                                        if (message[i].key.id === key.id) {
+                                            
+                                            msg = message[i] ;
+        
+                                            break 
+                                        }
+        
+                                    } 
+        
+                                  //  console.log(msg)
+        
+                                    if(msg === null || !msg ||msg === 'undefined') {console.log('Message non trouver') ; return } 
+        
+                                await zk.sendMessage(idBot,{ image : { url : './media/fredi-delete.jpg'},caption : `*😊😅😅😜 Lucky Md Xforce Detected Deleted\n Message From* @${msg.key.participant.split('@')[0]}​` , mentions : [msg.key.participant]},)
+                                .then( () => {
+                                    zk.sendMessage(idBot,{forward : msg},{quoted : msg}) ;
+                                })
+                               
+                                } catch (e) {
+                                    console.log(e)
+                               }
+                            }
+            
 
             /** ****** gestion auto-status  */
                   if (ms.key && ms.key.remoteJid === 'status@broadcast' && conf.AUTO_STATUS_REPLY === "yes") {
