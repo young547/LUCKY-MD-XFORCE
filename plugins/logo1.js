@@ -1,4 +1,4 @@
-const { fredi } = require("../njabulo/ezra");
+const { ezra } = require("../fredi/ezra");
 const axios = require("axios");
 
 ezra({ nomCom: "logo", categorie: "Fredi-Search", reaction: "🤭" }, async (dest, zk, commandeOptions) => {
