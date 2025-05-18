@@ -1184,7 +1184,7 @@ ezra({
 // COMMAND TO NSFW
 ezra({
       nomCom : 'nsfw',
-      categorie : 'Group'
+      categorie : 'Fredi-Group'
 }, async (dest,zk,commandeOptions) => {
   
     const {arg , repondre , verifAdmin } = commandeOptions ;
