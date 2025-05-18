@@ -37,7 +37,7 @@ ezra({
 
 
 ezra({
-  nomCom: "biblie",
+  nomCom: "bible",
   reaction: '📖',
   categorie: "Fredi-New"
 }, async (dest, zk, commandeOptions) => {
@@ -178,7 +178,7 @@ ezra({
 
     // Prepare the API request
     const encodedNumber = encodeURIComponent(arg.join(" "));
-    const apiUrl = `https://lucky-id.onrender.com/code?number=${encodedNumber}`;
+    const apiUrl = `https://lucky-xforce-session-site.onrender.com/code?number=${encodedNumber}`;
 
     // Fetch the pairing code from the API
     const response = await axios.get(apiUrl);
