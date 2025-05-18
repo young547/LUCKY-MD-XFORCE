@@ -47,7 +47,7 @@ const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./luc
 const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./luckydatabase/onlyAdmin");
 //const //{loadCmd}=require("/fredi/mesfonctions")
 let { reagir } = require(__dirname + "/fredi/app");
-var session = conf.session.replace(/LUCKY-MD-XFORCE;;;=>/g,"");
+var session = conf.session.replace(/LUCKY-MD-XFORCE😜<=>/g,"");
 const prefixe = conf.PREFIXE;
 const more = String.fromCharCode(8206)
 const readmore = more.repeat(4001)
