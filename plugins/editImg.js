@@ -1,6 +1,6 @@
 const { ezra } = require("../fredi/ezra");
 const canvacord = require("canvacord");
-const {uploadImageToImgur} = require("../ezra/imgur")
+const {uploadImageToImgur} = require("../fredi/imgur")
 
 // Generic function to create a canvacord order
 function createCanvacordCommand(commandName, canvacordFunction) {
