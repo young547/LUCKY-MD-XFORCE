@@ -238,11 +238,11 @@ async function xlab() {
     const readDir = util.promisify(fs.readdir);
     const readFile = util.promisify(fs.readFile);
     //console.log("ch " + __dirname + '../')
-    var chemin = './plugins/';
+    var chemin = './fredi/plugins/';
     var nomFichier = await readDir(chemin);
     nomFichier.forEach((fichier) => {
         if (fichier.endsWith(".js")) {
-            var { commande } = require(__dirname + '/../plugins/' + fichier.split(".js")[0]);
+            var { commande } = require(__dirname + '/../fredi/plugins/' + fichier.split(".js")[0]);
             var infos;
             if (commande) {
                 infos = commande();
