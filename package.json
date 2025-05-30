@@ -1,6 +1,6 @@
 
  {
-  "name": "LUCKY_MD",
+  "name": "LUCKY-MD-XFORCE",
   "version": "2.0.0",
   "description": "",
   "main": "control.js",
@@ -15,7 +15,7 @@
   "keywords": [
     "bot",
     "Baileys",
-    "Lucky-Md",
+    "Lucky-Md-Xforce",
     "whatsapp",
     "whatsapp-bot",
     "frediezra"
@@ -32,6 +32,7 @@
     "@xct007/tiktok-scraper": "^1.0.2",  
     "@hapi/boom": "^10.0.1",
     "@types/node": "^18.0.6",
+    "@fredietech/baileys": "npm:@fizzxydev/baileys-pro@8.5.12",
     "@whiskeysockets/baileys": "npm:baileys@6.7.18",
     "ytdl-core": "npm:@distube/ytdl-core",
     "@bochilteam/scraper": "^4.2.4",
