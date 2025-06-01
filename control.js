@@ -1987,7 +1987,7 @@ https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f
 
 
         // fin fonctions utiles
-        /** ************* */
+        /** ************** */
         return zk;
     }
     let fichier = require.resolve(__filename);
