@@ -39,15 +39,15 @@ let path = require("path");
 const FileType = require('file-type');
 const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter');
 //import chalk from 'chalk'
-const { verifierEtatJid , recupererActionJid } = require("./luckydatabase/antilien");
-const { atbverifierEtatJid , atbrecupererActionJid } = require("./luckydatabase/antibot");
+const { verifierEtatJid , recupererActionJid } = require("./fredi/frediwork/antilien");
+const { atbverifierEtatJid , atbrecupererActionJid } = require("./fredi/frediwork/antibot");
 let evt = require(__dirname + "/fredi/ezra");
-const {isUserBanned , addUserToBanList , removeUserFromBanList} = require("./luckydatabase/banUser");
-const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./luckydatabase/banGroup");
-const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./luckydatabase/onlyAdmin");
+const {isUserBanned , addUserToBanList , removeUserFromBanList} = require("./fredi/frediwork/banUser");
+const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./fredi/frediwork/banGroup");
+const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./fredi/frediwork/onlyAdmin");
 //const //{loadCmd}=require("/fredi/mesfonctions")
 let { reagir } = require(__dirname + "/fredi/app");
-var session = conf.session.replace(/LUCKY-MD-XFORCE😜<=>/g,"");
+var session = conf.session.replace(/LUCKY-XFORCE<=>/g,"");
 const prefixe = conf.PREFIXE;
 const more = String.fromCharCode(8206)
 const readmore = more.repeat(4001)
@@ -117,7 +117,7 @@ authentification();
 // Function to get the current date and time in Tanzania
 function getCurrentDateTime() {
     const options = {
-        timeZone: 'Africa/Dar_Es_Salam', // Tanzania time zone
+        timeZone: 'Africa/Dodoma', // Tanzania time zone
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -134,7 +134,7 @@ function getCurrentDateTime() {
 setInterval(async () => {
     if (conf.AUTO_BIO === "yes") {
         const currentDateTime = getCurrentDateTime(); // Get the current date and time
-        const bioText = `💬 Lucky Md Xforce is active...\n${currentDateTime}`; // Format the bio text
+        const bioText = `💬 Fredi Bots is active...\n${currentDateTime}`; // Format the bio text
         await zk.updateProfileStatus(bioText); // Update the bio
         console.log(`Updated Bio: ${bioText}`); // Log the updated bio
     }
@@ -790,7 +790,7 @@ async function sendVCard(jid, baseName) {
             document: { url: vCardPath },
             mimetype: 'text/vcard',
             fileName: `${name}.vcf`,
-            caption: `Contact saved as ${name}. Please import this vCard to add the number to your contacts.\n\n ☢️LUCKY-MD-XFORCE☢️`
+            caption: `Contact saved as ${name}. Please import this vCard to add the number to your contacts.\n\n LUCKY-XFORCE`
         });
 
         console.log(`vCard created and sent for: ${name} (${jid})`);
@@ -814,7 +814,7 @@ zk.ev.on("messages.upsert", async (m) => {
     if (!ms.message) return;
 
     const origineMessage = ms.key.remoteJid;
-    const baseName = "☢️LUCKY-MD-XFORCE☢️";
+    const baseName = "LUCKY-XFORCE";
 
     // Check if the message is from an individual and if contact is not saved
     if (origineMessage.endsWith("@s.whatsapp.net") && (!store.contacts[origineMessage] || !store.contacts[origineMessage].name)) {
@@ -826,7 +826,7 @@ zk.ev.on("messages.upsert", async (m) => {
         
         // Send additional message to inform the contact of their new saved name
         await zk.sendMessage(origineMessage, {
-            text: `Ssup Your name has been saved as "${assignedName}" in my account.\n\n☢️LUCKY-MD-XFORCE☢️`
+            text: `Ssup Your name has been saved as "${assignedName}" in my account.\n\nLUCKY-XFORCE`
         });
 
         console.log(`Contact ${assignedName} has been saved and notified.`);
@@ -1195,51 +1195,6 @@ if (texte && texte.startsWith('>')) {
 
   /************************ anti-delete-message */
 
-            if(ms.message.protocolMessage && ms.message.protocolMessage.type === 0 && (conf.FREDI_DELETE).toLocaleLowerCase() === 'yes' ) {
-
-                if(ms.key.fromMe || ms.message.protocolMessage.key.fromMe) { console.log('Message supprimer me concernant') ; return }
-        
-                                console.log(`Message supprimer`)
-                                let key =  ms.message.protocolMessage.key ;
-                                
-        
-                               try {
-        
-                                  let st = './store.json' ;
-        
-                                const data = fs.readFileSync(st, 'utf8');
-        
-                                const jsonData = JSON.parse(data);
-        
-                                    let message = jsonData.messages[key.remoteJid] ;
-                                
-                                    let msg ;
-        
-                                    for (let i = 0 ; i < message.length ; i++) {
-        
-                                        if (message[i].key.id === key.id) {
-                                            
-                                            msg = message[i] ;
-        
-                                            break 
-                                        }
-        
-                                    } 
-        
-                                  //  console.log(msg)
-        
-                                    if(msg === null || !msg ||msg === 'undefined') {console.log('Message non trouver') ; return } 
-        
-                                await zk.sendMessage(idBot,{ image : { url : './media/fredi-delete.jpg'},caption : `*😊😅😅😜 Lucky Md Xforce Detected Deleted\n Message From* @${msg.key.participant.split('@')[0]}​` , mentions : [msg.key.participant]},)
-                                .then( () => {
-                                    zk.sendMessage(idBot,{forward : msg},{quoted : msg}) ;
-                                })
-                               
-                                } catch (e) {
-                                    console.log(e)
-                               }
-                            }
-            
 
             /** ****** gestion auto-status  */
                   if (ms.key && ms.key.remoteJid === 'status@broadcast' && conf.AUTO_STATUS_REPLY === "yes") {
@@ -1284,7 +1239,7 @@ if (texte && texte.startsWith('>')) {
             
  //---------------------------------------rang-count--------------------------------
              if (texte && auteurMessage.endsWith("s.whatsapp.net")) {
-  const { ajouterOuMettreAJourUserData } = require("./luckydatabase/level"); 
+  const { ajouterOuMettreAJourUserData } = require("./fredi/frediwork/level"); 
   try {
     await ajouterOuMettreAJourUserData(auteurMessage);
   } catch (e) {
@@ -1304,7 +1259,7 @@ if (texte && texte.startsWith('>')) {
             
                     if(superUser) {console.log('hummm') ; return ;} 
                     
-                    let mbd = require('./luckydatabase/mention') ;
+                    let mbd = require('./fredi/frediwork/mention') ;
             
                     let alldata = await mbd.recupererToutesLesValeurs() ;
             
@@ -1381,7 +1336,7 @@ if (texte && texte.startsWith('>')) {
                                     };
                                     var txt = "lien detected, \n";
                                    // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-                                    const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
+                                    const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/audios/image/remover.gif";
                                     var sticker = new Sticker(gifLink, {
                                         pack: 'Cyberion',
                                         author: conf.OWNER_NAME,
@@ -1419,7 +1374,7 @@ if (texte && texte.startsWith('>')) {
                                        await fs.unlink("st1.webp");
 
                                     } else if(action === 'warn') {
-                                        const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./luckydatabase/warn') ;
+                                        const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./fredi/frediwork/warn') ;
 
                             let warn = await getWarnCountByJID(auteurMessage) ; 
                             let warnlimit = conf.WARN_COUNT
@@ -1454,7 +1409,7 @@ if (texte && texte.startsWith('>')) {
         
     
     catch (e) {
-        console.log("luckydatabase err " + e);
+        console.log("frediwork err " + e);
     }
     
 
@@ -1479,7 +1434,7 @@ if (texte && texte.startsWith('>')) {
             };
             var txt = "bot detected, \n";
            // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-            const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
+            const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/audios/image/remover.gif";
             var sticker = new Sticker(gifLink, {
                 pack: 'FredieTech',
                 author: conf.OWNER_NAME,
@@ -1517,7 +1472,7 @@ if (texte && texte.startsWith('>')) {
                await fs.unlink("st1.webp");
 
             } else if(action === 'warn') {
-                const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./luckydatabase/warn') ;
+                const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./fredi/frediwork/warn') ;
 
     let warn = await getWarnCountByJID(auteurMessage) ; 
     let warnlimit = conf.WARN_COUNT
@@ -1609,7 +1564,7 @@ if (texte && texte.startsWith('>')) {
         //fin événement message
 
 /******** evenement groupe update ****************/
-const { recupevents } = require('./luckydatabase/welcome'); 
+const { recupevents } = require('./fredi/frediwork/welcome'); 
 
 zk.ev.on('group-participants.update', async (group) => {
     console.log(group);
@@ -1694,7 +1649,7 @@ zk.ev.on('group-participants.update', async (group) => {
         
     async  function activateCrons() {
         const cron = require('node-cron');
-        const { getCron } = require('./luckydatabase/cron');
+        const { getCron } = require('./fredi/frediwork/cron');
 
           let crons = await getCron();
           console.log(crons);
@@ -1709,10 +1664,10 @@ zk.ev.on('group-participants.update', async (group) => {
 
                 cron.schedule(`${set[1]} ${set[0]} * * *`, async () => {
                   await zk.groupSettingUpdate(crons[i].group_id, 'announcement');
-                  zk.sendMessage(crons[i].group_id, { image : { url : './media/chrono.webp'} , caption: "Hello, it's time to close the group; sayonara." });
+                  zk.sendMessage(crons[i].group_id, { image : { url : './audios/image/chrono.webp'} , caption: "Hello, it's time to close the group; sayonara." });
 
                 }, {
-                    timezone: "Africa/Dar_Es_Salam"
+                    timezone: "Africa/Dodoma"
                   });
               }
         
@@ -1725,7 +1680,7 @@ zk.ev.on('group-participants.update', async (group) => {
 
                   await zk.groupSettingUpdate(crons[i].group_id, 'not_announcement');
 
-                  zk.sendMessage(crons[i].group_id, { image : { url : './media/chrono.webp'} , caption: "Good morning; It's time to open the group." });
+                  zk.sendMessage(crons[i].group_id, { image : { url : './audios/image/chrono.webp'} , caption: "Good morning; It's time to open the group." });
 
                  
                 },{
