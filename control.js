@@ -39,20 +39,20 @@ let path = require("path");
 const FileType = require('file-type');
 const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter');
 //import chalk from 'chalk'
-const { verifierEtatJid , recupererActionJid } = require("./fredi/frediwork/antilien");
-const { atbverifierEtatJid , atbrecupererActionJid } = require("./fredi/frediwork/antibot");
+const { verifierEtatJid , recupererActionJid } = require("./luckydatabase/antilien");
+const { atbverifierEtatJid , atbrecupererActionJid } = require("./luckydatabase/antibot");
 let evt = require(__dirname + "/fredi/ezra");
-const {isUserBanned , addUserToBanList , removeUserFromBanList} = require("./fredi/frediwork/banUser");
-const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./fredi/frediwork/banGroup");
-const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./fredi/frediwork/onlyAdmin");
+const {isUserBanned , addUserToBanList , removeUserFromBanList} = require("./luckydatabase/banUser");
+const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./luckydatabase/banGroup");
+const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./luckydatabase/onlyAdmin");
 //const //{loadCmd}=require("/fredi/mesfonctions")
 let { reagir } = require(__dirname + "/fredi/app");
-var session = conf.session.replace(/LUCKY-XFORCE••<=>/g,"");
+var session = conf.session.replace(/LUCKY-MD-XFORCE😜<=>/g,"");
 const prefixe = conf.PREFIXE;
 const more = String.fromCharCode(8206)
 const readmore = more.repeat(4001)
 const BaseUrl = process.env.GITHUB_GIT;
-const ezraapikey = process.env.BOT_OWNER;
+const Ezraapikey = process.env.BOT_OWNER;
 
 async function authentification() {
     try {
@@ -117,7 +117,7 @@ authentification();
 // Function to get the current date and time in Tanzania
 function getCurrentDateTime() {
     const options = {
-        timeZone: 'Africa/Dodoma', // Tanzania time zone
+        timeZone: 'Africa/Dar_Es_Salam', // Tanzania time zone
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -134,7 +134,7 @@ function getCurrentDateTime() {
 setInterval(async () => {
     if (conf.AUTO_BIO === "yes") {
         const currentDateTime = getCurrentDateTime(); // Get the current date and time
-        const bioText = `FrediEzra Tech Bot Is Online 💡\n${currentDateTime}`; // Format the bio text
+        const bioText = `💬 Lucky Md Xforce is active...\n${currentDateTime}`; // Format the bio text
         await zk.updateProfileStatus(bioText); // Update the bio
         console.log(`Updated Bio: ${bioText}`); // Log the updated bio
     }
@@ -165,123 +165,6 @@ setInterval(async () => {
     }
   }
 });
-
-// LUCKY-MD ANTIDELETE SNIPPET
-zk.ev.on("messages.upsert", async (m) => {  
-    if (conf.ANTI_DELETE_MESSAGE !== "yes") return; // Ensure antidelete is enabled  
-
-    const { messages } = m;  
-    const ms = messages[0];  
-    if (!ms.message) return; // Skip messages with no content  
-
-    const messageKey = ms.key;  
-    const remoteJid = messageKey.remoteJid;  
-
-    // Ignore status updates
-    if (remoteJid === "status@broadcast") return;  
-
-    // Initialize chat storage if it doesn't exist  
-    if (!store.chats[remoteJid]) {  
-        store.chats[remoteJid] = [];  
-    }  
-
-    // Save the received message to storage  
-    store.chats[remoteJid].push(ms);  
-
-    // Handle deleted messages  
-    if (ms.message.protocolMessage?.type === 0) {  
-        const deletedKey = ms.message.protocolMessage.key;  
-        const chatMessages = store.chats[remoteJid];  
-        const deletedMessage = chatMessages.find(msg => msg.key.id === deletedKey.id);  
-
-        if (!deletedMessage) return;
-
-        try {  
-            const deleterJid = ms.key.participant || ms.key.remoteJid;
-            const originalSenderJid = deletedMessage.key.participant || deletedMessage.key.remoteJid;
-            const isGroup = remoteJid.endsWith('@g.us');
-            
-            // Group Metadata Handling
-            let groupInfo = '';
-            if (isGroup) {
-                try {
-                    const groupMetadata = await zk.groupMetadata(remoteJid);
-                    groupInfo = `\n• Group: ${groupMetadata.subject}`;
-                } catch (e) {
-                    console.error('Error fetching group metadata:', e);
-                    groupInfo = '\n• Group information unavailable.';
-                }
-            }
-
-            const notification = `🔮 *Lucky Xforce antiDelete* 🔮\n` +
-                                `• Deleted by: @${deleterJid.split("@")[0]}\n` +
-                                `• Original sender: @${originalSenderJid.split("@")[0]}\n` +
-                                `${groupInfo}\n` +
-                                `• Chat type: ${isGroup ? 'Group' : 'Private'}`;
-
-            const contextInfo = getContextInfo('Deleted Message Alert', deleterJid);
-
-            // Common message options
-            const baseMessage = {
-                mentions: [deleterJid, originalSenderJid],
-                contextInfo: contextInfo
-            };
-
-            // Handle different message types
-            if (deletedMessage.message.conversation) {
-                await zk.sendMessage(remoteJid, {
-                    text: `${notification}\n\n📝 *Deleted Text:*\n${deletedMessage.message.conversation}`,
-                    ...baseMessage
-                });
-            } else if (deletedMessage.message.extendedTextMessage) {
-                await zk.sendMessage(remoteJid, {
-                    text: `${notification}\n\n📝 *Deleted Text:*\n${deletedMessage.message.extendedTextMessage.text}`,
-                    ...baseMessage
-                });
-            } else if (deletedMessage.message.imageMessage) {
-                const caption = deletedMessage.message.imageMessage.caption || '';
-                const imagePath = await zk.downloadAndSaveMediaMessage(deletedMessage.message.imageMessage);
-                await zk.sendMessage(remoteJid, {
-                    image: { url: imagePath },
-                    caption: `${notification}\n\n📷 *Image Caption:*\n${caption}`,
-                    ...baseMessage
-                });
-            } else if (deletedMessage.message.videoMessage) {
-                const caption = deletedMessage.message.videoMessage.caption || '';
-                const videoPath = await zk.downloadAndSaveMediaMessage(deletedMessage.message.videoMessage);
-                await zk.sendMessage(remoteJid, {
-                    video: { url: videoPath },
-                    caption: `${notification}\n\n🎥 *Video Caption:*\n${caption}`,
-                    ...baseMessage
-                });
-            } else if (deletedMessage.message.audioMessage) {
-                const audioPath = await zk.downloadAndSaveMediaMessage(deletedMessage.message.audioMessage);
-                await zk.sendMessage(remoteJid, {
-                    audio: { url: audioPath },
-                    ptt: true,
-                    caption: `${notification}\n\n🎤 *Voice Message Deleted*`,
-                    ...baseMessage
-                });
-            } else if (deletedMessage.message.stickerMessage) {
-                const stickerPath = await zk.downloadAndSaveMediaMessage(deletedMessage.message.stickerMessage);
-                await zk.sendMessage(remoteJid, {
-                    sticker: { url: stickerPath },
-                    caption: notification,
-                    ...baseMessage
-                });
-            } else {
-                // Handle unsupported message types
-                await zk.sendMessage(remoteJid, {
-                    text: `${notification}\n\n⚠️ *Unsupported message type was deleted*`,
-                    ...baseMessage
-                });
-            }
-        } catch (error) {  
-            console.error('Error handling deleted message:', error);  
-        }  
-    }  
-});
-
 
      // Utility function for delay
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -907,7 +790,7 @@ async function sendVCard(jid, baseName) {
             document: { url: vCardPath },
             mimetype: 'text/vcard',
             fileName: `${name}.vcf`,
-            caption: `Contact saved as ${name}. Please import this vCard to add the number to your contacts.\n\n by Lucky-Md-Xforce`
+            caption: `Contact saved as ${name}. Please import this vCard to add the number to your contacts.\n\n ☢️LUCKY-MD-XFORCE☢️`
         });
 
         console.log(`vCard created and sent for: ${name} (${jid})`);
@@ -931,7 +814,7 @@ zk.ev.on("messages.upsert", async (m) => {
     if (!ms.message) return;
 
     const origineMessage = ms.key.remoteJid;
-    const baseName = "Timnasa-Md";
+    const baseName = "☢️LUCKY-MD-XFORCE☢️";
 
     // Check if the message is from an individual and if contact is not saved
     if (origineMessage.endsWith("@s.whatsapp.net") && (!store.contacts[origineMessage] || !store.contacts[origineMessage].name)) {
@@ -943,7 +826,7 @@ zk.ev.on("messages.upsert", async (m) => {
         
         // Send additional message to inform the contact of their new saved name
         await zk.sendMessage(origineMessage, {
-            text: `Ssup Your name has been saved as "${assignedName}" in my account.\n\nby Lucky-Md-Xforce`
+            text: `Ssup Your name has been saved as "${assignedName}" in my account.\n\n☢️LUCKY-MD-XFORCE☢️`
         });
 
         console.log(`Contact ${assignedName} has been saved and notified.`);
@@ -954,7 +837,7 @@ zk.ev.on("messages.upsert", async (m) => {
 
 
 // Default auto-reply message
-let auto_reply_message = `Hello @${senderNumber}, my owner is unavailable right now. Kindly leave a message. 😊😊`;
+let auto_reply_message = `Hello👋, I'm ${conf.BOT} on board. My owner ${conf.OWNER_NAME} currently unavailable👁️. Please leave a message, and we will get back to you as soon as possible🤝. Thanks To ${conf.DEV}`;
 
 // Track contacts that have already received the auto-reply
 let repliedContacts = new Set();
@@ -988,8 +871,13 @@ zk.ev.on("messages.upsert", async (m) => {
         await zk.sendMessage(remoteJid, {
             text: auto_reply_message,
         });
+
+        // Add contact to replied set to prevent repeat replies
+        repliedContacts.add(remoteJid);
+    }
+});
         
-       // Set for auto audio
+        
 const audioMap = {
     "heya": "audios/hey.wav",
     "hi": "audios/hey.wav",
@@ -1010,12 +898,11 @@ const audioMap = {
     "wazii": "audios/mkuu.wav",
     "bot": "audios/fred.mp3",
     "lucky": "audios/fred.mp3",
-    "lucky xmd": "audios/fred.mp3",
+    "xbot": "audios/fred.mp3",
     "Fredi": "audios/fred.mp3",
-    "fred": "audios/fred.mp3",
+    "mdx": "audios/fred.mp3",
     "md": "audios/fred.mp3",
     "whatsapp bot": "audios/fred.mp3",
-    "lucky md": "audios/fred.mp3",
     "evening": "audios/goodevening.wav",
     "goodevening": "audios/goodevening.wav",
     "darling": "audios/darling.wav",
@@ -1095,8 +982,7 @@ if (conf.AUDIO_REPLY === "yes") {
         }
     });
 }
-        
-        
+      
         zk.ev.on("messages.upsert", async (m) => {
             const { messages } = m;
             const ms = messages[0];
@@ -1122,9 +1008,9 @@ if (conf.AUDIO_REPLY === "yes") {
             var servBot = idBot.split('@')[0];
             /* const fredi='255620814108';
              const ezra='255764182801';
-             const freditech='255752593977'*/
-            /*  var superUser=[servBot,fredi,ezra,freditech].map((s)=>s.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);
-              var dev =[fredi,ezra,freditech].map((t)=>t.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);*/
+             const fredietech='255752593977'*/
+            /*  var superUser=[servBot,fredi,ezra,fredietech].map((s)=>s.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);
+              var dev =[fredi,ezra,fredietech].map((t)=>t.replace(/[^0-9]/g)+"@s.whatsapp.net").includes(auteurMessage);*/
             const verifGroupe = origineMessage?.endsWith("@g.us");
             var infosGroupe = verifGroupe ? await zk.groupMetadata(origineMessage) : "";
             var nomGroupe = verifGroupe ? infosGroupe.subject : "";
@@ -1140,17 +1026,17 @@ if (conf.AUDIO_REPLY === "yes") {
             }
             
             var membreGroupe = verifGroupe ? ms.key.participant : '';
-            const { getAllSudoNumbers } = require("./fredi/frediwork/sudo");
+            const { getAllSudoNumbers } = require("./luckydatabase/sudo");
             const nomAuteurMessage = ms.pushName;
+            const fredietech = '255752593977';
             const fredi = '255620814108';
-            const ezra = '255764182801';
-            const freditech = "255752593977";
+            const ezra = "255764182801";
             const sudo = await getAllSudoNumbers();
-            const superUserNumbers = [servBot, fredi, ezra, freditech, conf.NUMERO_OWNER].map((s) => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
+            const superUserNumbers = [servBot, fredietech, fredi, ezra, conf.NUMERO_OWNER].map((s) => s.replace(/[^0-9]/g) + "@s.whatsapp.net");
             const allAllowedNumbers = superUserNumbers.concat(sudo);
             const superUser = allAllowedNumbers.includes(auteurMessage);
             
-            var dev = [fredi, ezra, freditech].map((t) => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
+            var dev = [fredietech, fredi,ezra].map((t) => t.replace(/[^0-9]/g) + "@s.whatsapp.net").includes(auteurMessage);
             function repondre(mes) { zk.sendMessage(origineMessage, { text: mes }, { quoted: ms }); }
             console.log("\tCONSOLE MESSAGES");
             console.log("=========== NEW CONVERSATION ===========");
@@ -1190,7 +1076,7 @@ if (etat == 1) {
 const mbre = verifGroupe ? await infosGroupe.participants : '';
 let admins = verifGroupe ? groupeAdmin(mbre) : '';
 const verifAdmin = verifGroupe ? admins.includes(auteurMessage) : false;
-var verifZokouAdmin = verifGroupe ? admins.includes(idBot) : false;
+var verifEzraAdmin = verifGroupe ? admins.includes(idBot) : false;
 
 const arg = texte ? texte.trim().split(/ +/).slice(1) : null;
 const verifCom = texte ? texte.startsWith(prefixe) : false;
@@ -1221,7 +1107,7 @@ var commandeOptions = {
     auteurMessage,
     nomAuteurMessage,
     idBot,
-    verifZokouAdmin,
+    verifEzraAdmin,
     prefixe,
     arg,
     repondre,
@@ -1245,6 +1131,7 @@ if (conf.AUTO_READ === 'yes') {
         }
     });
 }
+            
 
 if (! superUser && origineMessage === auteurMessage && conf.AUTO_BLOCK === 'yes') {
         zk.sendMessage(auteurMessage, {
@@ -1305,10 +1192,54 @@ if (texte && texte.startsWith('>')) {
     await repondre(String(err));
   }
 }
-     
-           
-// LUCKY MD XFORCE DELETED HANDLE
 
+  /************************ anti-delete-message */
+
+            if(ms.message.protocolMessage && ms.message.protocolMessage.type === 0 && (conf.FREDI_DELETE).toLocaleLowerCase() === 'yes' ) {
+
+                if(ms.key.fromMe || ms.message.protocolMessage.key.fromMe) { console.log('Message supprimer me concernant') ; return }
+        
+                                console.log(`Message supprimer`)
+                                let key =  ms.message.protocolMessage.key ;
+                                
+        
+                               try {
+        
+                                  let st = './store.json' ;
+        
+                                const data = fs.readFileSync(st, 'utf8');
+        
+                                const jsonData = JSON.parse(data);
+        
+                                    let message = jsonData.messages[key.remoteJid] ;
+                                
+                                    let msg ;
+        
+                                    for (let i = 0 ; i < message.length ; i++) {
+        
+                                        if (message[i].key.id === key.id) {
+                                            
+                                            msg = message[i] ;
+        
+                                            break 
+                                        }
+        
+                                    } 
+        
+                                  //  console.log(msg)
+        
+                                    if(msg === null || !msg ||msg === 'undefined') {console.log('Message non trouver') ; return } 
+        
+                                await zk.sendMessage(idBot,{ image : { url : './media/fredi-delete.jpg'},caption : `*😊😅😅😜 Lucky Md Xforce Detected Deleted\n Message From* @${msg.key.participant.split('@')[0]}​` , mentions : [msg.key.participant]},)
+                                .then( () => {
+                                    zk.sendMessage(idBot,{forward : msg},{quoted : msg}) ;
+                                })
+                               
+                                } catch (e) {
+                                    console.log(e)
+                               }
+                            }
+            
 
             /** ****** gestion auto-status  */
                   if (ms.key && ms.key.remoteJid === 'status@broadcast' && conf.AUTO_STATUS_REPLY === "yes") {
@@ -1321,7 +1252,7 @@ if (texte && texte.startsWith('>')) {
   }, { quoted: ms });
                        }
                        
-            
+                       
             if (ms.key && ms.key.remoteJid === "status@broadcast" && conf.AUTO_READ_STATUS === "yes") {
                 await zk.readMessages([ms.key]);
             }
@@ -1353,7 +1284,7 @@ if (texte && texte.startsWith('>')) {
             
  //---------------------------------------rang-count--------------------------------
              if (texte && auteurMessage.endsWith("s.whatsapp.net")) {
-  const { ajouterOuMettreAJourUserData } = require("./fredi/frediwork/level"); 
+  const { ajouterOuMettreAJourUserData } = require("./luckydatabase/level"); 
   try {
     await ajouterOuMettreAJourUserData(auteurMessage);
   } catch (e) {
@@ -1373,7 +1304,7 @@ if (texte && texte.startsWith('>')) {
             
                     if(superUser) {console.log('hummm') ; return ;} 
                     
-                    let mbd = require('./fredi/frediwork/mention') ;
+                    let mbd = require('./luckydatabase/mention') ;
             
                     let alldata = await mbd.recupererToutesLesValeurs() ;
             
@@ -1450,7 +1381,7 @@ if (texte && texte.startsWith('>')) {
                                     };
                                     var txt = "lien detected, \n";
                                    // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-                                    const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/audios/image/remover.gif";
+                                    const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
                                     var sticker = new Sticker(gifLink, {
                                         pack: 'Cyberion',
                                         author: conf.OWNER_NAME,
@@ -1488,7 +1419,7 @@ if (texte && texte.startsWith('>')) {
                                        await fs.unlink("st1.webp");
 
                                     } else if(action === 'warn') {
-                                        const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./fredi/frediwork/warn') ;
+                                        const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./luckydatabase/warn') ;
 
                             let warn = await getWarnCountByJID(auteurMessage) ; 
                             let warnlimit = conf.WARN_COUNT
@@ -1523,7 +1454,7 @@ if (texte && texte.startsWith('>')) {
         
     
     catch (e) {
-        console.log("data err " + e);
+        console.log("luckydatabase err " + e);
     }
     
 
@@ -1548,7 +1479,7 @@ if (texte && texte.startsWith('>')) {
             };
             var txt = "bot detected, \n";
            // txt += `message supprimé \n @${auteurMessage.split("@")[0]} rétiré du groupe.`;
-            const gifLink = "https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/audios/image/remover.gif";
+            const gifLink = "https://raw.githubusercontent.com/djalega8000/Zokou-MD/main/media/remover.gif";
             var sticker = new Sticker(gifLink, {
                 pack: 'FredieTech',
                 author: conf.OWNER_NAME,
@@ -1586,7 +1517,7 @@ if (texte && texte.startsWith('>')) {
                await fs.unlink("st1.webp");
 
             } else if(action === 'warn') {
-                const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./fredi/frediwork/warn') ;
+                const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./luckydatabase/warn') ;
 
     let warn = await getWarnCountByJID(auteurMessage) ; 
     let warnlimit = conf.WARN_COUNT
@@ -1678,7 +1609,7 @@ if (texte && texte.startsWith('>')) {
         //fin événement message
 
 /******** evenement groupe update ****************/
-const { recupevents } = require('./fredi/frediwork/welcome'); 
+const { recupevents } = require('./luckydatabase/welcome'); 
 
 zk.ev.on('group-participants.update', async (group) => {
     console.log(group);
@@ -1687,7 +1618,7 @@ zk.ev.on('group-participants.update', async (group) => {
     try {
         ppgroup = await zk.profilePictureUrl(group.id, 'image');
     } catch {
-        ppgroup = 'https://files.catbox.moe/7irwqn.jpeg';
+        ppgroup = 'https://files.catbox.moe/3o37c5.jpeg';
     }
 
     try {
@@ -1763,7 +1694,7 @@ zk.ev.on('group-participants.update', async (group) => {
         
     async  function activateCrons() {
         const cron = require('node-cron');
-        const { getCron } = require('./fredi/frediwork/cron');
+        const { getCron } = require('./luckydatabase/cron');
 
           let crons = await getCron();
           console.log(crons);
@@ -1778,10 +1709,10 @@ zk.ev.on('group-participants.update', async (group) => {
 
                 cron.schedule(`${set[1]} ${set[0]} * * *`, async () => {
                   await zk.groupSettingUpdate(crons[i].group_id, 'announcement');
-                  zk.sendMessage(crons[i].group_id, { image : { url : './audios/image/chrono.webp'} , caption: "Hello, it's time to close the group; sayonara." });
+                  zk.sendMessage(crons[i].group_id, { image : { url : './media/chrono.webp'} , caption: "Hello, it's time to close the group; sayonara." });
 
                 }, {
-                    timezone: "Africa/Dodoma"
+                    timezone: "Africa/Dar_Es_Salam"
                   });
               }
         
@@ -1794,7 +1725,7 @@ zk.ev.on('group-participants.update', async (group) => {
 
                   await zk.groupSettingUpdate(crons[i].group_id, 'not_announcement');
 
-                  zk.sendMessage(crons[i].group_id, { image : { url : './audios/image/chrono.webp'} , caption: "Good morning; It's time to open the group." });
+                  zk.sendMessage(crons[i].group_id, { image : { url : './media/chrono.webp'} , caption: "Good morning; It's time to open the group." });
 
                  
                 },{
@@ -1818,24 +1749,24 @@ zk.ev.on('group-participants.update', async (group) => {
                 console.log("👀 Lucky Xforce is connecting...");
             }
             else if (connection === 'open') {
-                console.log("💡 Lucky Xforce Connected to WhatsApp! ☺️");
+                console.log("🔑 Lucky Xforce Connected to WhatsApp! ☺️");
                 console.log("--");
                 await (0, baileys_1.delay)(200);
                 console.log("------");
                 await (0, baileys_1.delay)(300);
                 console.log("------------------/-----");
-                console.log("🔮 Lucky Xforce is Online 🕸\n\n");
+                console.log("💡 Lucky Xforce is Online 🕸\n\n");
                 //chargement des luckycmd 
-                console.log("Loading Lucky Xforce plugins ...\n");
+                console.log("♻️ Loading Lucky Xforce Plugins...\n");
                 fs.readdirSync(__dirname + "/fredi/plugins").forEach((fichier) => {
                     if (path.extname(fichier).toLowerCase() == (".js")) {
                         try {
-                            require(__dirname + "/fredi/plugings/" + fichier);
-                            console.log(fichier + "🛒 Lucky Xforce plugins Installed Successfully✔️");
+                            require(__dirname + "/fredi/plugins/" + fichier);
+                            console.log(fichier + "🏆Lucky Xforce Plugins Installed Successfully✔️");
                         }
                         catch (e) {
                             console.log(`${fichier} could not be installed due to : ${e}`);
-                        } /* require(__dirname + "/beltah/" + fichier);
+                        } /* require(__dirname + "/fredi/" + fichier);
                          console.log(fichier + " Installed ✔️")*/
                         (0, baileys_1.delay)(300);
                     }
@@ -1851,7 +1782,7 @@ zk.ev.on('group-participants.update', async (group) => {
                 else {
                     md = "undefined";
                 }
-                console.log("💡 plugins Installation Completed by FrediEzra ✅");
+                console.log("🛒Lucky Xforce Plugins Installation Completed ✅");
 
                 await activateCrons();
                 
@@ -1886,25 +1817,25 @@ https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f
                     console.log('Session id error, rescan again...');
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
-                    console.log('!!! connection closed, reconnection in progress...');
+                    console.log('!!! connexion fermée, reconnexion en cours ...');
                     main();
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-                    console.log('connection error 😞,,, trying to reconnect... ');
+                    console.log('connection error 🥺 ,,, trying to reconnect... ');
                     main();
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
-                    console.log('connection replaced ,,, a session is already open please close it !!!');
+                    console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
-                    console.log('you are disconnected,,, please rescan the qr code please');
+                    console.log('vous êtes déconnecté,,, veuillez rescanner le code qr svp');
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
-                    console.log('reboot in progress ▶️');
+                    console.log('redémarrage en cours ▶️');
                     main();
                 }   else {
 
-                    console.log('restart on error',raisonDeconnexion) ;         
+                    console.log('redemarrage sur le coup de l\'erreur  ',raisonDeconnexion) ;         
                     //repondre("* Redémarrage du bot en cour ...*");
 
                                 const {exec}=require("child_process") ;
