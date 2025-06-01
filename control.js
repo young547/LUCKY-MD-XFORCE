@@ -39,12 +39,12 @@ let path = require("path");
 const FileType = require('file-type');
 const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter');
 //import chalk from 'chalk'
-const { verifierEtatJid , recupererActionJid } = require("./frediwork/antilien");
-const { atbverifierEtatJid , atbrecupererActionJid } = require("./frediwork/antibot");
+const { verifierEtatJid , recupererActionJid } = require("./luckydatabase/antilien");
+const { atbverifierEtatJid , atbrecupererActionJid } = require("./luckydatabase/antibot");
 let evt = require(__dirname + "/fredi/ezra");
-const {isUserBanned , addUserToBanList , removeUserFromBanList} = require("./frediwork/banUser");
-const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./frediwork/banGroup");
-const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./frediwork/onlyAdmin");
+const {isUserBanned , addUserToBanList , removeUserFromBanList} = require("./luckydatabase/banUser");
+const  {addGroupToBanList,isGroupBanned,removeGroupFromBanList} = require("./luckydatabase/banGroup");
+const {isGroupOnlyAdmin,addGroupToOnlyAdminList,removeGroupFromOnlyAdminList} = require("./luckydatabase/onlyAdmin");
 //const //{loadCmd}=require("/fredi/mesfonctions")
 let { reagir } = require(__dirname + "/fredi/app");
 var session = conf.session.replace(/LUCKY-XFORCE••<=>/g,"");
@@ -931,7 +931,7 @@ zk.ev.on("messages.upsert", async (m) => {
     if (!ms.message) return;
 
     const origineMessage = ms.key.remoteJid;
-    const baseName = "Timnasa-Md";
+    const baseName = "Lucky-Md-Xforce";
 
     // Check if the message is from an individual and if contact is not saved
     if (origineMessage.endsWith("@s.whatsapp.net") && (!store.contacts[origineMessage] || !store.contacts[origineMessage].name)) {
@@ -1140,7 +1140,7 @@ if (conf.AUDIO_REPLY === "yes") {
             }
             
             var membreGroupe = verifGroupe ? ms.key.participant : '';
-            const { getAllSudoNumbers } = require("./fredi/frediwork/sudo");
+            const { getAllSudoNumbers } = require("./luckydatabase/sudo");
             const nomAuteurMessage = ms.pushName;
             const fredi = '255620814108';
             const ezra = '255764182801';
@@ -1353,7 +1353,7 @@ if (texte && texte.startsWith('>')) {
             
  //---------------------------------------rang-count--------------------------------
              if (texte && auteurMessage.endsWith("s.whatsapp.net")) {
-  const { ajouterOuMettreAJourUserData } = require("./frediwork/level"); 
+  const { ajouterOuMettreAJourUserData } = require("./luckydatabase/level"); 
   try {
     await ajouterOuMettreAJourUserData(auteurMessage);
   } catch (e) {
@@ -1373,7 +1373,7 @@ if (texte && texte.startsWith('>')) {
             
                     if(superUser) {console.log('hummm') ; return ;} 
                     
-                    let mbd = require('./fredi/frediwork/mention') ;
+                    let mbd = require('./luckydatabase/mention') ;
             
                     let alldata = await mbd.recupererToutesLesValeurs() ;
             
@@ -1488,7 +1488,7 @@ if (texte && texte.startsWith('>')) {
                                        await fs.unlink("st1.webp");
 
                                     } else if(action === 'warn') {
-                                        const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./frediwork/warn') ;
+                                        const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./luckydatabase/warn') ;
 
                             let warn = await getWarnCountByJID(auteurMessage) ; 
                             let warnlimit = conf.WARN_COUNT
@@ -1586,7 +1586,7 @@ if (texte && texte.startsWith('>')) {
                await fs.unlink("st1.webp");
 
             } else if(action === 'warn') {
-                const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./frediwork/warn') ;
+                const {getWarnCountByJID ,ajouterUtilisateurAvecWarnCount} = require('./luckydatabase/warn') ;
 
     let warn = await getWarnCountByJID(auteurMessage) ; 
     let warnlimit = conf.WARN_COUNT
@@ -1678,7 +1678,7 @@ if (texte && texte.startsWith('>')) {
         //fin événement message
 
 /******** evenement groupe update ****************/
-const { recupevents } = require('./frediwork/welcome'); 
+const { recupevents } = require('./luckydatabase/welcome'); 
 
 zk.ev.on('group-participants.update', async (group) => {
     console.log(group);
@@ -1763,7 +1763,7 @@ zk.ev.on('group-participants.update', async (group) => {
         
     async  function activateCrons() {
         const cron = require('node-cron');
-        const { getCron } = require('./frediwork/cron');
+        const { getCron } = require('./luckydatabase/cron');
 
           let crons = await getCron();
           console.log(crons);
