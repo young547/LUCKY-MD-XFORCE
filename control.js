@@ -117,7 +117,7 @@ authentification();
 // Function to get the current date and time in Tanzania
 function getCurrentDateTime() {
     const options = {
-        timeZone: 'Africa/Dodoma', // Tanzania time zone
+        timeZone: 'Africa/Dar_Es_Salam', // Tanzania time zone
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -1667,7 +1667,7 @@ zk.ev.on('group-participants.update', async (group) => {
                   zk.sendMessage(crons[i].group_id, { image : { url : './media/chrono.webp'} , caption: "Hello, it's time to close the group; sayonara." });
 
                 }, {
-                    timezone: "Africa/Dodoma"
+                    timezone: "Africa/Dar_Es_Salam"
                   });
               }
         
@@ -1684,7 +1684,7 @@ zk.ev.on('group-participants.update', async (group) => {
 
                  
                 },{
-                    timezone: "Africa/Dodoma"
+                    timezone: "Africa/Dar_Es_Salam"
                   });
               }
         
