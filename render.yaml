@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: LUCKY-MD-XFORCE 
-    env: node
-    region: singapore
-    buildCommand: "yarn install"
-    startCommand: "npm start"
-    plan: free
