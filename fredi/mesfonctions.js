@@ -10,8 +10,21 @@ const baileys_1 = require("@whiskeysockets/baileys");
 const fs = require('fs-extra');
 const util = require('util');
 let { listall } = require('./stylish-font');
-/** *********** */
-/*** ************* ***/
+
+/*_________by Djalega++
+
+fonction zJson:
+récupère un objet json
+:paramètres
+-url:lien sur laquelle la requête est effectuée
+-option: éventuelle option de requête
+:valeur de retour
+données contenues dans la reponse de la requête
+
+
+
+*/
+/** ********* */
 module.exports.genererNomFichier = async (extension) => {
     var randomNbre = Math.floor(Math.random() * 2000);
     var nomFichier = `Zok${randomNbre}.${extension}`;
@@ -46,8 +59,14 @@ async function zJson(url, option) {
     }
 }
 exports.zJson = zJson;
-/* FrediEzra bot projects
-tanzania 1 now is fredi */
+/*______ fonction getBuffer------
+récupère les données sous forme de : arraybuffer
+:paramètres
+-url:lien de la requête
+-option:eventuelles options pour la requête
+:valeur de retour
+tableau contenant les données de la réponse renvoyée par la requête
+-------*/
 async function getBuffer(url, option) {
     try {
         option ? option : {};
@@ -64,7 +83,15 @@ async function getBuffer(url, option) {
     }
 }
 exports.getBuffer = getBuffer;
-/* function for cmd
+/*-------- fonction recept_message
+
+fonction pour récupérer les meté-données des messages recus
+- paramètres
+:zok objet waSocket
+:objet IwaMessage (message reçu )
+:store enregistrements de conversation
+- valeur de retour
+retourne un tableau contenant les meta-données du message reçu
 */
 async function recept_message(zok, mess, store) {
     if (!mess)
@@ -140,7 +167,7 @@ function styletext(teks) {
 exports.styletext = styletext;
 /*fonction pour prendre le lienle site api.waifu
 
-by @frediezra
+by @luffy
 
 
 */
@@ -181,9 +208,28 @@ async function ajouterCommande() {
         if (path.extname(fichier).toLowerCase() == ".js") {
             require(__dirname + "/../commandes/" + fichier.split(".js")[0]);
             console.log('fichier : ' + fichier);
+            //console.log("le module    "+__dirname+"/../commandes/"+fichier.split(".js")[0])
         }
+        // console.log('fichier : '+fichier )
     });
-    /* tanzania bot generation
+    /*const readDir = util.promisify(fs.readdir);
+    const readFile = util.promisify(fs.readFile);
+    //console.log("ch " + __dirname + '../')
+    var chemin = './luckycmd/'
+    var nomFichier = await readDir(chemin)
+  //console.log("installation des plugins ... ")
+    nomFichier.forEach((fichier) => {
+      if (fichier.endsWith(".js")) {
+        //console.log(fichier+" installé ✅")
+        var { commande } = require('../'+chemin.replace(/./, '') + fichier.split('.js')[0])
+        var infoCom = commande()
+        for (var a of infoCom.nomCom) {
+          tabCmd[a] = infoCom.execute
+          reaction[a]=infoCom.reaction
+        }
+      }
+  //console.log("installation de plugins terminé 👍🏿")
+    })
   
   */
 }
