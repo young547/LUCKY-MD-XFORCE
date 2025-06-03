@@ -1,16 +1,11 @@
 {
   "name": "LUCKY-MD-XFORCE",
   "description": "A WhatsApp bot by FrediEzra using Baileys",
-  "keywords": [
-    "bot",
-    "node",
-    "baileys",
-    "whatsapp"
-  ],
-  "logo": "https://files.catbox.moe/uw4l17.jpeg",
-  "repository": "https://github.com/mr-X-force/LUCKY-MD-XFORCE",
-  "succes_url": "/",
-  "stack": "container",
+    "logo": "https://github.com/mr-X-force/LUCKY-MD-XFORCE/fredi/logo.png",
+  "keywords": ["LUCKY-MD-XFORCE"],
+  "success_url": "/",
+
+    "stack": "container",
   "env": {
     "PREFIX": {
       "description": "Command prefix to trigger bot commands",
@@ -137,16 +132,11 @@
     "required": false
   }
 },
- "formation": {
-    "worker": {
-      "quantity": 1,
-      "size": "standard-2x"
-    }
-  },
-  "addons": [
-    {
-      "plan": "heroku-postgresql:essential-0"
-    }
-  ]
-}
 
+     "buildpacks": [
+        {
+            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+        }
+     ],
+  "stack": "heroku-24"
+}
