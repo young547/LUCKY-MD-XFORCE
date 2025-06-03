@@ -177,9 +177,9 @@ exports.reaction = reaction;
 var fruit = {};
 exports.fruit = fruit;
 async function ajouterCommande() {
-    fs.readdirSync(__dirname + "/../plugins").forEach((fichier) => {
+    fs.readdirSync(__dirname + "/../commandes").forEach((fichier) => {
         if (path.extname(fichier).toLowerCase() == ".js") {
-            require(__dirname + "/../plugins/" + fichier.split(".js")[0]);
+            require(__dirname + "/../commandes/" + fichier.split(".js")[0]);
             console.log('fichier : ' + fichier);
         }
     });
