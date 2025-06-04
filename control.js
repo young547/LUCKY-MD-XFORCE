@@ -1167,16 +1167,13 @@ if (texte && texte.startsWith('>')) {
     await zk.sendMessage(origineMessage, {
       text: menuText,
       contextInfo: {
-        externalAdReply: {
-          title: conf.BOT,
-          body: conf.OWNER_NAME,
-          sourceUrl: conf.GURL,
-          thumbnailUrl: conf.URL,
-          mediaType: 1,
-          showAdAttribution: true,
-          renderLargerThumbnail: false
-        }
-      }
+         isForwarded: true,
+         forwardedNewsletterMessageInfo: {
+         newsletterJid: '120363313124070136@newsletter',
+         newsletterName: "@FrediEzra",
+         serverMessageId: 143,
+        },
+      },
     });
     return; 
   }
@@ -1773,21 +1770,21 @@ https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f
                     console.log('Session id error, rescan again...');
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionClosed) {
-                    console.log('!!! connection closed, reconnection in progress...');
+                    console.log('!!! connexion fermée, reconnexion en cours ...');
                     main();
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.connectionLost) {
-                    console.log('connection error 😞,,, trying to reconnect... ');
+                    console.log('connection error 🥺 ,,, trying to reconnect... ');
                     main();
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason?.connectionReplaced) {
-                    console.log('connection replaced ,,, a session is already open please close it !!!');
+                    console.log('connexion réplacée ,,, une sesssion est déjà ouverte veuillez la fermer svp !!!');
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.loggedOut) {
-                    console.log('you are disconnected,,, please rescan the qr code please');
+                    console.log('vous êtes déconnecté,,, veuillez rescanner le code qr svp');
                 }
                 else if (raisonDeconnexion === baileys_1.DisconnectReason.restartRequired) {
-                    console.log('reboot in progress ▶️');
+                    console.log('redémarrage en cours ▶️');
                     main();
                 }   else {
 
@@ -1870,6 +1867,23 @@ https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f
                 }
             });
         }
+
+
+
+        // fin fonctions utiles
+        /** ************* */
+        return zk;
+    }
+    let fichier = require.resolve(__filename);
+    fs.watchFile(fichier, () => {
+        fs.unwatchFile(fichier);
+        console.log(`mise à jour ${__filename}`);
+        delete require.cache[fichier];
+        require(fichier);
+    });
+    main();
+}, 5000);
+
 
 
 
