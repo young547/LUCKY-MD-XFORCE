@@ -148,7 +148,7 @@ ezra({
       // Si la requête a réussi, envoyez l'image résultante
       
       let stickerMess = new Sticker(response.data.result, {
-        pack: ☢️LUCKY-MD XFORCE☢️,
+        pack: "LUCKY MD XFORCE",
         type: StickerTypes.CROPPED,
         categories: ["🤩", "🎉"],
         id: "12345",
