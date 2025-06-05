@@ -37,7 +37,7 @@ async function convertToMp3(inputPath, outputPath) {
     });
 }
 
-fana({ nomCom: "url", categorie: "General-Fredi", reaction: "👨🏿‍💻" }, async (origineMessage, zk, commandeOptions) => {
+ezra({ nomCom: "url", categorie: "General-Fredi", reaction: "👨🏿‍💻" }, async (origineMessage, zk, commandeOptions) => {
     const { msgRepondu, repondre } = commandeOptions;
 
     if (!msgRepondu) {
