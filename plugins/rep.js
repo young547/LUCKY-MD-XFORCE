@@ -23,7 +23,7 @@ const formatUptime = (seconds) => {
 // GitHub stats function
 const fetchGitHubStats = async () => {
     try {
-        const response = await axios.get("https://api.github.com/repos/Fred1e/LUCKY_MD");
+        const response = await axios.get("https://api.github.com/repos/mr-X-force/LUCKY-MD-XFORCE");
         const forksCount = response.data.forks_count * 11;
         const starsCount = response.data.stargazers_count * 11;
         const totalUsers = forksCount + starsCount;
