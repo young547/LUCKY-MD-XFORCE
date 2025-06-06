@@ -23,7 +23,7 @@ ezra({
     aliases: ["script", "cs"],
     reaction: '📦',
     nomFichier: __filename
-}, async (command, reply, context) => {
+}, async (command, zk, context) => {
     const { nomAuteurMessage } = context;
 
     const stats = await fetchGitHubStats();
