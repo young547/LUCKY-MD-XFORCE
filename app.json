@@ -69,19 +69,19 @@
       "value": "no",
       "required": false
     },
-    "ANTI_CALL_TEXT": {
-      "description": "Type your anticall message to always send when calls are declined.You can as well leave it blank",
-      "value": "",
-      "required": false
-    },
     "BOT_NAME": {
       "description": "you must give a name for you bot uhh??!!",
       "value": "☢️LUCKY-MD-XFORCE☢️",
       "required": false 
     },
-    "CHAT_BOT": {
-      "description": "urs if you want bot to chat automatic",
-      "value": "yes",
+    "CHATBOT_INBOX": {
+      "description": "urs if you want bot to chat automatic in inbox",
+      "value": "no",
+      "required": false
+    },
+    "VOICE_CHATBOT_INBOX": {
+      "description": "urs if you want bot to voice chat inbox with",
+      "value": "no",
       "required": false
     },
     "PUBLIC_MODE": {
@@ -114,14 +114,9 @@
       "value": "https://files.catbox.moe/3o37c5.jpeg",
       "required": true
     },
-    "URL2": {
-      "description": "you must add your bot image url.Get your image url now and fill it here",
-      "value": "https://files.catbox.moe/uw4l17.jpeg",
-      "required": true
-    },
     "AUTO_READ_MESSAGES": {
       "description": "yes toactivate no to deactivate",
-      "value": "yes",
+      "value": "no",
       "required": false  
     },
     "NUMERO_OWNER": {
@@ -144,8 +139,13 @@
       "value": "1",
       "required": false
     },
-    "ANTI_DELETE_MESSAGE": {
-      "description": "Enable anti-delete message (set 'yes' to activate or 'no' to deactivate)",
+    "ANTI_DELETE_DM": {
+      "description": "Enable anti-delete message in dm's (set 'yes' to activate or 'no' to deactivate)",
+      "value": "no",
+      "required": false
+    },
+    "ANTI_DELETE_GROUP": {
+      "description": "Enable anti-delete message in group's (set 'yes' to activate or 'no' to deactivate)",
       "value": "no",
       "required": false
     },
