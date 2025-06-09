@@ -1,72 +1,109 @@
+const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter');
 const { ezra } = require("../fredi/ezra");
-const { Sticker, StickerTypes } = require('wa-sticker-formatter');
-const { ajouterOuMettreAJourJid, mettreAJourAction, verifierEtatJid } = require("../luckydatabase/antilien");
-const { atbajouterOuMettreAJourJid, atbverifierEtatJid } = require("../luckydatabase/antibot");
-const { search, download } = require("aptoide-scraper");
+const { downloadMediaMessage } = require('@whiskeysockets/baileys');
 const fs = require("fs-extra");
-const conf = require("../set");
-const { default: axios } = require('axios');
+const ffmpeg = require("fluent-ffmpeg");
+const { Catbox } = require('node-catbox');
+const catbox = new Catbox();
 
-ezra({
-  nomCom: "tagll",
-  categorie: 'Group',
-  reaction: "💬"
-}, async (dest, zk, commandeOptions) => {
-  const { ms, repondre, arg, verifGroupe, nomGroupe, infosGroupe, nomAuteurMessage, verifAdmin, superUser } = commandeOptions;
+async function uploadToCatbox(Path) {
+  if (!fs.existsSync(Path)) {
+    throw new Error("File does not exist");
+  }
+  try {
+    const response = await catbox.uploadFile({ path: Path });
+    if (response) {
+      return response;
+    } else {
+      throw new Error("Error retrieving the file link");
+    }
+  } catch (err) {
+    throw new Error(String(err));
+  }
+}
 
-  if (!verifGroupe) {
-    repondre("✋🏿 ✋🏿this command is reserved for groups ❌");
+async function convertToMp3(inputPath, outputPath) {
+  return new Promise((resolve, reject) => {
+    ffmpeg(inputPath)
+      .toFormat("mp3")
+      .on("error", (err) => reject(err))
+      .on("end", () => resolve(outputPath))
+      .save(outputPath);
+  });
+}
+
+ezra({ nomCom: "url4", categorie: "General", reaction: "👨🏿‍💻" }, async (origineMessage, zk, commandeOptions) => {
+  const { msgRepondu, repondre } = commandeOptions;
+  if (!msgRepondu) {
+    repondre('Please reply to an image, video, or audio file.');
     return;
   }
 
-  if (!arg || arg === ' ') {
-    mess = 'Aucun Message';
+  let mediaPath, mediaType;
+  if (msgRepondu.videoMessage) {
+    const videoSize = msgRepondu.videoMessage.fileLength;
+    if (videoSize > 50 * 1024 * 1024) {
+      repondre('The video is too long. Please send a smaller video.');
+      return;
+    }
+    mediaPath = await zk.downloadAndSaveMediaMessage(msgRepondu.videoMessage);
+    mediaType = 'video';
+  } else if (msgRepondu.imageMessage) {
+    mediaPath = await zk.downloadAndSaveMediaMessage(msgRepondu.imageMessage);
+    mediaType = 'image';
+  } else if (msgRepondu.audioMessage) {
+    mediaPath = await zk.downloadAndSaveMediaMessage(msgRepondu.audioMessage);
+    mediaType = 'audio';
+    const outputPath = `${mediaPath}.mp3`;
+    try {
+      await convertToMp3(mediaPath, outputPath);
+      fs.unlinkSync(mediaPath);
+      mediaPath = outputPath;
+    } catch (error) {
+      console.error("Error converting audio to MP3:", error);
+      repondre('Failed to process the audio file.');
+      return;
+    }
   } else {
-    mess = arg.join(' ');
+    repondre('Unsupported media type. Reply with an image, video, or audio file.');
+    return;
   }
 
-  let membresGroupe = verifGroupe ? await infosGroupe.participants : "";
-  var tag = "";
-  tag += `╭─────────────────━┈⊷*
-│ *☆Lucky Md Xforce☆*
-╰─────────────────━┈⊷ 
-│⭕ *Group* : ${nomGroupe}
-│⭕ *Hey😀* : *${nomAuteurMessage}*
-│⭕ *Message* : *${mess}*
-╰─────────────━┈⊷\n \n`;
+  try {
+    const catboxUrl = await uploadToCatbox(mediaPath);
+    fs.unlinkSync(mediaPath);
 
-  let emoji = ['🚔', '💗', '🚀', '❌', '⛱️', '🖥️', '🗂️', '🔧', '🎊', '😡', '🙏🏿', '🚬', '$', '😟', '🔰', '🟢'];
-  let random = Math.floor(Math.random() * (emoji.length - 1));
-
-  for (const membre of membresGroupe) {
-    tag += `${emoji[random]} @${membre.id.split("@")[0]}\n`;
-  }
-
-  if (verifAdmin || superUser) {
-    const button = {
-      "buttonText": "👋 Hello!",
-      "type": 1,
-      "sections": [
-        {
-          "title": "Tag All",
-          "rows": [
-            {
-              "title": "Tag All Members",
-              "description": "Tag all members in the group",
-              "rowId": "tagall"
-            }
-          ]
-        }
-      ]
-    };
-
-    zk.sendMessage(dest, {
-      text: tag,
-      mentions: membresGroupe.map((i) => i.id),
-      footer: "FrediEzra",
-      buttons: [button]
-    }, { quoted: ms });
-  } else {
-    repondre('command reserved for admins');
+    switch (mediaType) {
+      case 'image':
+        repondre(`Lucky Xforce url: ${catboxUrl}`, {
+          buttons: [
+            { buttonId: 'download', buttonText: { displayText: 'Download' } },
+            { buttonId: 'share', buttonText: { displayText: 'Share' } },
+          ],
+        });
+        break;
+      case 'video':
+        repondre(`Lucky Xforce url: ${catboxUrl}`, {
+          buttons: [
+            { buttonId: 'download', buttonText: { displayText: 'Download' } },
+            { buttonId: 'share', buttonText: { displayText: 'Share' } },
+          ],
+        });
+        break;
+      case 'audio':
+        repondre(`Lucky Xforce url: ${catboxUrl}`, {
+          buttons: [
+            { buttonId: 'download', buttonText: { displayText: 'Download' } },
+            { buttonId: 'share', buttonText: { displayText: 'Share' } },
+          ],
+        });
+        break;
+      default:
+        repondre('An unknown error occurred.');
+        break;
+    }
+  } catch (error) {
+    console.error('Error while creating your URL:', error);
+    repondre('Oops, an error occurred.');
   }
 });
