@@ -1,109 +1,161 @@
-const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter');
-const { ezra } = require("../fredi/ezra");
-const { downloadMediaMessage } = require('@whiskeysockets/baileys');
-const fs = require("fs-extra");
-const ffmpeg = require("fluent-ffmpeg");
-const { Catbox } = require('node-catbox');
-const catbox = new Catbox();
+const util = require('util');
+const fs = require('fs-extra');
+const { ezra } = require(__dirname + "/../fredi/ezra");
+const { format } = require(__dirname + "/../fredi/mesfonctions");
+const os = require("os");
+const moment = require("moment-timezone");
+const s = require(__dirname + "/../set");
 
-async function uploadToCatbox(Path) {
-  if (!fs.existsSync(Path)) {
-    throw new Error("File does not exist");
-  }
-  try {
-    const response = await catbox.uploadFile({ path: Path });
-    if (response) {
-      return response;
-    } else {
-      throw new Error("Error retrieving the file link");
-    }
-  } catch (err) {
-    throw new Error(String(err));
-  }
-}
-
-async function convertToMp3(inputPath, outputPath) {
-  return new Promise((resolve, reject) => {
-    ffmpeg(inputPath)
-      .toFormat("mp3")
-      .on("error", (err) => reject(err))
-      .on("end", () => resolve(outputPath))
-      .save(outputPath);
+ezra({
+  nomCom: "menu4",
+  categorie: "General"
+}, async (dest, zk, commandeOptions) => {
+  let { ms, repondre, prefixe, nomAuteurMessage, mybotpic } = commandeOptions;
+  let { cm } = require(__dirname + "/../fredi          
+  var coms = {};
+  var mode = s.MODE.toLowerCase() !== "//ezra");
+  var coms = {};
+  var mode = s.MODE.toLowerCase() !== "yes" ? "private" : "public";
+  cm.map(async (com) => {
+    if (!coms[com.categorie])
+      coms[com.categorie] = [];
+    coms[com.categorie].push(com.nomCom);
   });
-}
+  moment.tz.setDefault("Africa/Nairobi");
+  const temps = moment().format('HH:mm:ss');
+  const date = moment().format('DD/MM/YYYY');
 
-ezra({ nomCom: "url4", categorie: "General", reaction: "👨🏿‍💻" }, async (origineMessage, zk, commandeOptions) => {
-  const { msgRepondu, repondre } = commandeOptions;
-  if (!msgRepondu) {
-    repondre('Please reply to an image, video, or audio file.');
-    return;
+  const hour = moment().hour();
+  let greeting = "🌅Good Morning my brother 🌄";
+  if (hour >= 12 && hour < 18) {
+    greeting = "🌄Good afternnon! Stay energized! 🌿";
+  } else if (hour >= 18) {
+    greeting = "🌇Good Everning! Hope you had a great day! 🌙";
+  } else if (hour >= 22 || hour < 5) {
+    greeting = "Good Night 🌌";
   }
 
-  let mediaPath, mediaType;
-  if (msgRepondu.videoMessage) {
-    const videoSize = msgRepondu.videoMessage.fileLength;
-    if (videoSize > 50 * 1024 * 1024) {
-      repondre('The video is too long. Please send a smaller video.');
-      return;
-    }
-    mediaPath = await zk.downloadAndSaveMediaMessage(msgRepondu.videoMessage);
-    mediaType = 'video';
-  } else if (msgRepondu.imageMessage) {
-    mediaPath = await zk.downloadAndSaveMediaMessage(msgRepondu.imageMessage);
-    mediaType = 'image';
-  } else if (msgRepondu.audioMessage) {
-    mediaPath = await zk.downloadAndSaveMediaMessage(msgRepondu.audioMessage);
-    mediaType = 'audio';
-    const outputPath = `${mediaPath}.mp3`;
-    try {
-      await convertToMp3(mediaPath, outputPath);
-      fs.unlinkSync(mediaPath);
-      mediaPath = outputPath;
-    } catch (error) {
-      console.error("Error converting audio to MP3:", error);
-      repondre('Failed to process the audio file.');
-      return;
-    }
+  let commandList = "\n\nAvailable Commands";
+  for (let category in coms) {
+    commandList += `\n\n*${category}*\n`;
+    commandList += coms[category].map((cmd) => `- ${prefixe}${cmd}`).join("\n");
+  }
+
+  let infoMsg = ` ╭══════════════⊷❍
+┇❍▸ ʙᴏᴛ ɴᴀᴍᴇ: *ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴛᴇᴄʜ*
+┇❍▸ ʙᴏᴛ ᴜsᴇʀ: *${nomAuteurMessage}*
+┇❍▸ ᴍᴏᴅᴇ: *${mode}*
+┇❍▸ ᴘʀᴇғɪx: *[ ${prefixe} ]*
+┇❍▸ ᴘʟᴀᴛғᴏʀᴍ: *${os.platform()}*
+┇❍▸ ᴅᴀᴛᴇ: *${date}*
+┇❍▸ ᴛɪᴍᴇ: *${temps}*
+┇❍▸ ᴄᴏᴍᴍᴀɴᴅs: *${cm.length}*
+┇❍▸ ᴄᴀᴘᴀᴄɪᴛʏ: ${format(os.totalmem() - os.freemem())}/${format(os.totalmem())}
+╰══════════════⊷❍
+🌟 *${greeting}* 🌟 
+${commandList}`;
+
+  const extraImages1 = [
+    "https://i.ibb.co/n6rw805/694affc7ca5a5fb0cb58c2b4533f962d.jpg",
+    "https:                                                         
+    "//i.ibb.co/n6rw805/694affc7ca5a5fb0cb58c2b4533f962d.jpg",
+    "https://i.ibb.co/n6rw805/694affc7ca5a5fb0cb58c2b4533f962d.jpg"
+  ];
+
+  const extraImages2 = [
+    "https:                                                         
+    "//i.ibb.co/n6rw805/694affc7ca5a5fb0cb58c2b4533f962d.jpg",
+    "https://i.ibb.co/n6rw805/694affc7ca5a5fb0cb58c2b4533f962d.jpg",
+    "https://i.ibb.co/n6rw805/694affc7ca5a5fb0cb58c2b4533f962d.jpg"
+  ];
+
+  const isOriginalMenu = Math.random() > 0.5;
+  let mediaUrl, thumbnail, renderType;
+  if (isOriginalMenu) {
+    mediaUrl = mybotpic();
+
+try {
+  if (mediaUrl.match(/\.(mp4|gif)$/i)) {
+    await zk.sendMessage(dest, {
+      video: { url: mediaUrl },
+      caption: infoMsg,
+      footer: "*CASEYRHODES-XMD*, developed by CASEYRHODES",
+      gifPlayback: true,
+      buttons: [
+        {
+          buttonId: `${prefixe}menu`,
+          buttonText: { displayText: "Menu" },
+          type: 1,
+        },
+        {
+          buttonId: `${prefixe}help`,
+          buttonText: { displayText: "Help" },
+          type: 1,
+        },
+        {
+          buttonId: `${prefixe}commands`,
+          buttonText: { displayText: "Commands" },
+          type: 1,
+        },
+      ],
+      contextInfo: {
+        externalAdReply: {
+          title: "ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴛᴇᴄʜ",
+          body: "Tap here to Join our official channel!",
+          mediaType: 1,
+          thumbnailUrl: thumbnail,
+          sourceUrl: "https:                                                 
+          showAdAttribution: true,
+          [renderType]: true,
+        },
+      },
+    }, { quoted: ms });
   } else {
-    repondre('Unsupported media type. Reply with an image, video, or audio file.');
-    return;
+    await zk.sendMessage(dest, {
+      image: { url: mediaUrl },
+      caption: infoMsg,
+      footer: "//whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E",
+          showAdAttribution: true,
+          [renderType]: true,
+        },
+      },
+    }, { quoted: ms });
+  } else {
+    await zk.sendMessage(dest, {
+      image: { url: mediaUrl },
+      caption: infoMsg,
+      footer: "*CASEYRHODES-XMD*, developed by CASEYRHODES",
+      buttons: [
+        {
+          buttonId: `${prefixe}menu`,
+          buttonText: { displayText: "Menu" },
+          type: 1,
+        },
+        {
+          buttonId: `${prefixe}help`,
+          buttonText: { displayText: "Help" },
+          type: 1,
+        },
+        {
+          buttonId: `${prefixe}commands`,
+          buttonText: { displayText: "Commands" },
+          type: 1,
+        },
+      ],
+      contextInfo: {
+        externalAdReply: {
+          title: "ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴛᴇᴄʜ",
+          body: "Tap here to Join our official channel!",
+          mediaType: 1,
+          thumbnailUrl: thumbnail,
+          sourceUrl: "https://whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E",
+          showAdAttribution: true,
+          [renderType]: true,
+        },
+      },
+    }, { quoted: ms });
   }
-
-  try {
-    const catboxUrl = await uploadToCatbox(mediaPath);
-    fs.unlinkSync(mediaPath);
-
-    switch (mediaType) {
-      case 'image':
-        repondre(`Lucky Xforce url: ${catboxUrl}`, {
-          buttons: [
-            { buttonId: 'download', buttonText: { displayText: 'Download' } },
-            { buttonId: 'share', buttonText: { displayText: 'Share' } },
-          ],
-        });
-        break;
-      case 'video':
-        repondre(`Lucky Xforce url: ${catboxUrl}`, {
-          buttons: [
-            { buttonId: 'download', buttonText: { displayText: 'Download' } },
-            { buttonId: 'share', buttonText: { displayText: 'Share' } },
-          ],
-        });
-        break;
-      case 'audio':
-        repondre(`Lucky Xforce url: ${catboxUrl}`, {
-          buttons: [
-            { buttonId: 'download', buttonText: { displayText: 'Download' } },
-            { buttonId: 'share', buttonText: { displayText: 'Share' } },
-          ],
-        });
-        break;
-      default:
-        repondre('An unknown error occurred.');
-        break;
-    }
-  } catch (error) {
-    console.error('Error while creating your URL:', error);
-    repondre('Oops, an error occurred.');
-  }
-});
+} catch (e) {
+  console.log("Error sending menu: " + e);
+  repondre("Error sending menu: " + e);
+}
