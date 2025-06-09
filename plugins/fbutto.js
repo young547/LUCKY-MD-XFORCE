@@ -1,55 +1,72 @@
-const { ezra } = require('../fredi/ezra');
-const getFBInfo = require("@xaviabot/fb-downloader");
+const { ezra } = require("../fredi/ezra");
+const { Sticker, StickerTypes } = require('wa-sticker-formatter');
+const { ajouterOuMettreAJourJid, mettreAJourAction, verifierEtatJid } = require("../luckydatabase/antilien");
+const { atbajouterOuMettreAJourJid, atbverifierEtatJid } = require("../luckydatabase/antibot");
+const { search, download } = require("aptoide-scraper");
+const fs = require("fs-extra");
+const conf = require("../set");
+const { default: axios } = require('axios');
 
 ezra({
-  nomCom: "fbook",
-  categorie: "Download",
-  reaction: "📽️"
+  nomCom: "tagll",
+  categorie: 'Group',
+  reaction: "💬"
 }, async (dest, zk, commandeOptions) => {
-  const { repondre, ms, arg } = commandeOptions;
-  if (!arg[0]) {
-    repondre('Insert a public Facebook video link!');
+  const { ms, repondre, arg, verifGroupe, nomGroupe, infosGroupe, nomAuteurMessage, verifAdmin, superUser } = commandeOptions;
+
+  if (!verifGroupe) {
+    repondre("✋🏿 ✋🏿this command is reserved for groups ❌");
     return;
   }
-  const queryURL = arg.join(" ");
-  try {
-    const result = await getFBInfo(queryURL);
-    const caption = `Title: ${result.title}\nLink: ${result.url}`;
-    const buttons = [
-      {
-        buttonId: "download_hd",
-        buttonText: {
-          displayText: "Download HD"
-        }
-      },
-      {
-        buttonId: "download_sd",
-        buttonText: {
-          displayText: "Download SD"
-        }
-      }
-    ];
-    await zk.sendMessage(dest, {
-      image: { url: result.thumbnail },
-      caption,
-      buttons
-    }, { quoted: ms });
 
-    zk.on('button-press', async (button) => {
-      if (button.id === 'download_hd') {
-        await zk.sendMessage(dest, {
-          video: { url: result.hd },
-          caption: 'Downloaded using Lucky-Xforce'
-        }, { quoted: ms });
-      } else if (button.id === 'download_sd') {
-        await zk.sendMessage(dest, {
-          video: { url: result.sd },
-          caption: 'Downloaded using Lucky-Xforce'
-        }, { quoted: ms });
-      }
-    });
-  } catch (error) {
-    console.error('Error downloading video:', error);
-    repondre('Try fbdl2 on this link or check the link validity');
+  if (!arg || arg === ' ') {
+    mess = 'Aucun Message';
+  } else {
+    mess = arg.join(' ');
+  }
+
+  let membresGroupe = verifGroupe ? await infosGroupe.participants : "";
+  var tag = "";
+  tag += `╭─────────────────━┈⊷*
+│ *☆Lucky Md Xforce☆*
+╰─────────────────━┈⊷ 
+│⭕ *Group* : ${nomGroupe}
+│⭕ *Hey😀* : *${nomAuteurMessage}*
+│⭕ *Message* : *${mess}*
+╰─────────────━┈⊷\n \n`;
+
+  let emoji = ['🚔', '💗', '🚀', '❌', '⛱️', '🖥️', '🗂️', '🔧', '🎊', '😡', '🙏🏿', '🚬', '$', '😟', '🔰', '🟢'];
+  let random = Math.floor(Math.random() * (emoji.length - 1));
+
+  for (const membre of membresGroupe) {
+    tag += `${emoji[random]} @${membre.id.split("@")[0]}\n`;
+  }
+
+  if (verifAdmin || superUser) {
+    const button = {
+      "buttonText": "👋 Hello!",
+      "type": 1,
+      "sections": [
+        {
+          "title": "Tag All",
+          "rows": [
+            {
+              "title": "Tag All Members",
+              "description": "Tag all members in the group",
+              "rowId": "tagall"
+            }
+          ]
+        }
+      ]
+    };
+
+    zk.sendMessage(dest, {
+      text: tag,
+      mentions: membresGroupe.map((i) => i.id),
+      footer: "FrediEzra",
+      buttons: [button]
+    }, { quoted: ms });
+  } else {
+    repondre('command reserved for admins');
   }
 });
