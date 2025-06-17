@@ -6,8 +6,7 @@ ezra({
     alias: "speed",
     desc: "Check bot's response time.",
     categorie: "General-Fredi",
-    react: "🫧",
-    filename: __filename
+    reaction: "🫧",
 },
 async (zk, mek, m, { from, quoted, reply }) => {
     try {
