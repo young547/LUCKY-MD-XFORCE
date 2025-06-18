@@ -74,7 +74,7 @@
       "value": "☢️LUCKY-MD-XFORCE☢️",
       "required": false 
     },
-    "CHATBOT_INBOX": {
+    "CHAT_BOT": {
       "description": "urs if you want bot to chat automatic in inbox",
       "value": "no",
       "required": false
@@ -139,7 +139,7 @@
       "value": "1",
       "required": false
     },
-    "ANTI_DELETE_DM": {
+    "ANTI_DELETE_MESSAGES": {
       "description": "Enable anti-delete message in dm's (set 'yes' to activate or 'no' to deactivate)",
       "value": "no",
       "required": false
