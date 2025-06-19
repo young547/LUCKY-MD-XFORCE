@@ -1,11 +1,3 @@
-<a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=100&pause=1000&color=8A2BE2&center=true&width=1000&height=200&lines=LUCKY-MD-XFORCE" alt="Typing SVG" />
-</a>
-
-<div align="center">
-  <a><img src='https://files.catbox.moe/uw4l17.jpeg' alt="Lucky Md Banner" /></a>
-</div>
-
 [![FREDIEZRA TECH](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/lucky.svg)](https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f)
 
 
