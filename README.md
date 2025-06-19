@@ -6,6 +6,11 @@
   <a><img src='https://files.catbox.moe/uw4l17.jpeg' alt="Lucky Md Banner" /></a>
 </div>
 
+<div align="center">
+ <a><img src="[![FREDIEZRA TECH](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/media/lucky.svg)](https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f)" 
+      /></a>
+
+
 <p align="center">
   <a href="https://github.com/mr-X-force">
     <img title="Developer" src="https://img.shields.io/badge/Author-LUCKY%20MD%20XFORCE-FF00FF.svg?style=big-square&logo=github" />
