@@ -31,22 +31,22 @@
 ---
 
 ## 🚀 DEPLOY LUCKY MD XFORCE BOT TO YOUR HOST
-
+## HEROKU
 [![Heroku](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/heroku.svg)](https://lucky-md-xforce-deploy-your-bot-with-your-github-username.vercel.app) <details><summary>Step-by-step</summary><ul><li>Fork this repo</li><li>Click Heroku button above</li><li>Connect your GitHub and select this repo</li><li>Set config vars like SESSION_ID</li><li>Click **Deploy App**</li></ul></details>
 
-
+## TALKDROVE 
 [![TalkDrove](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/talkdrove.svg)](https://host.talkdrove.com/share-bot/47) <details><summary>Step-by-step</summary><ul><li>Open the TalkDrove link</li><li>Click **Deploy Now**</li><li>Paste repo link</li><li>Add ENV values (SESSION_ID)</li><li>Deploy the bot</li></ul></details>
 
-
+## KOYEB
 [![Koyeb](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/koyeb.svg)](https://app.koyeb.com/services/deploy?type=git&repository=mr-X-force/LUCKY-MD-XFORCE) <details><summary>Step-by-step</summary><ul><li>Click above to open deploy panel</li><li>Authorize GitHub and select repo</li><li>Set environment variables</li><li>Deploy and wait for logs to show successful build</li></ul></details>
 
-
+## RAILWAY
 [![Railway](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/railway.svg)](https://railway.app/new) <details><summary>Step-by-step</summary><ul><li>Open link</li><li>Click **Deploy from GitHub repo**</li><li>Select this repo</li><li>Go to variables tab → add SESSION_ID, AUTOBIO etc.</li><li>Deploy</li></ul></details>
 
-
+## RENDER
 [![Render](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/render.svg)](https://dashboard.render.com/web/new) <details><summary>Step-by-step</summary><ul><li>Open Render dashboard</li><li>Click **New Web Service**</li><li>Connect your GitHub</li><li>Choose this repo</li><li>Add build/start command & ENV vars</li><li>Click **Create Web Service**</li></ul></details>
 
-
+## NETLIFY
 [![Netlify](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/netlify.svg)](https://app.netlify.com/) <details><summary>Step-by-step</summary><ul><li>Use for frontend session site only</li><li>Drag/drop or link repo with index.html</li><li>Publish to host session UI</li></ul></details>
 
 ---
