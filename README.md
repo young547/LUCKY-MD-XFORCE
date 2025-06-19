@@ -32,7 +32,7 @@
 
 ## 🚀 DEPLOY LUCKY MD XFORCE BOT TO YOUR HOST
 
-[![Heroku](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/-eroku.svg))](https://lucky-md-xforce-deploy-your-bot-with-your-github-username.vercel.app) <details><summary>Step-by-step</summary><ul><li>Fork this repo</li><li>Click Heroku button above</li><li>Connect your GitHub and select this repo</li><li>Set config vars like SESSION_ID</li><li>Click **Deploy App**</li></ul></details>
+[![Heroku](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/-eroku.svg)](https://lucky-md-xforce-deploy-your-bot-with-your-github-username.vercel.app) <details><summary>Step-by-step</summary><ul><li>Fork this repo</li><li>Click Heroku button above</li><li>Connect your GitHub and select this repo</li><li>Set config vars like SESSION_ID</li><li>Click **Deploy App**</li></ul></details>
 
 
 [![TalkDrove](https://img.shields.io/badge/TalkDrove-A52A2A?style=for-the-badge&logo=github)](https://host.talkdrove.com/share-bot/47) <details><summary>Step-by-step</summary><ul><li>Open the TalkDrove link</li><li>Click **Deploy Now**</li><li>Paste repo link</li><li>Add ENV values (SESSION_ID)</li><li>Deploy the bot</li></ul></details>
