@@ -16,12 +16,12 @@ const getContextInfo = (title = '', userJid = '', thumbnailUrl = '') => ({
   isForwarded: true,
   forwardedNewsletterMessageInfo: {
     newsletterJid: "120363313124070136@newsletter",
-    newsletterName: "BELTAH MD UPDATES",
+    newsletterName: "@FrediEzra",
     serverMessageId: Math.floor(100000 + Math.random() * 900000),
   },
   externalAdReply: {
     showAdAttribution: true,
-    title: conf.BOT || 'YouTube Downloader',
+    title: conf.BOT || 'Lucky Downloader',
     body: title || "Media Downloader",
     thumbnailUrl: thumbnailUrl || conf.URL || '',
     sourceUrl: conf.GURL || '',
