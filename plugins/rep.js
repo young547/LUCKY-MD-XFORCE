@@ -1,1 +1,119 @@
-'use strict';const _0x5a3d6a=_0x4aa4;(function(_0x5c7bec,_0x12e234){const _0x47b6c7=_0x4aa4,_0x104fb5=_0x5c7bec();while(!![]){try{const _0x4dcf9e=parseInt(_0x47b6c7(0xcc))/0x1*(parseInt(_0x47b6c7(0xd5))/0x2)+parseInt(_0x47b6c7(0xd4))/0x3+parseInt(_0x47b6c7(0xdc))/0x4*(-parseInt(_0x47b6c7(0xcd))/0x5)+-parseInt(_0x47b6c7(0xc3))/0x6+-parseInt(_0x47b6c7(0xbe))/0x7*(parseInt(_0x47b6c7(0xcf))/0x8)+-parseInt(_0x47b6c7(0xd3))/0x9*(-parseInt(_0x47b6c7(0xc4))/0xa)+-parseInt(_0x47b6c7(0xdf))/0xb*(-parseInt(_0x47b6c7(0xd1))/0xc);if(_0x4dcf9e===_0x12e234)break;else _0x104fb5['push'](_0x104fb5['shift']());}catch(_0x527022){_0x104fb5['push'](_0x104fb5['shift']());}}}(_0x37cc,0xacb8a));function _0x4aa4(_0x1e0b05,_0x528ccf){const _0x37cc89=_0x37cc();return _0x4aa4=function(_0x4aa447,_0x5a5d15){_0x4aa447=_0x4aa447-0xbe;let _0x5d3d59=_0x37cc89[_0x4aa447];return _0x5d3d59;},_0x4aa4(_0x1e0b05,_0x528ccf);}const {ezra}=require(_0x5a3d6a(0xc2)),axios=require('axios'),moment=require('moment-timezone'),set=require(__dirname+_0x5a3d6a(0xdd));function _0x37cc(){const _0x5874c8=['9121329gTLUqt','853467dFDnQL','206LQyAWz','ms\x0a📅\x20*Date:*\x20','forks_count','data','https://files.catbox.moe/se9mii.mp3','updated_at','log','1544ffAUMW','/../set','repo','935Bhfobe','*🫧\x20Lucky\x20Xforce\x20repo\x20song\x20🫧','floor','ping','⚫\x20Pong:\x20','❌\x20Error\x20fetching\x20repository\x20data.\x20Please\x20try\x20again\x20later.','sendMessage','@FrediEzra','120363313124070136@newsletter','❌\x20Ping\x20Command\x20Error:\x20','LUCKY-MD-XFORCE','LUCKY\x20MD\x20XFORCE','watchers','TIMEZONE','5918507apxTrn','audio/mp4','https://files.catbox.moe/uw4l17.jpeg','\x0a⏰\x20*Time:*\x20','../fredi/ezra','997566bwWBJo','10lCaDLl','get','stargazers_count','Error\x20fetching\x20data:','\x0aThis\x20is\x0a\x0a>\x20LUCKY\x20MD\x20XFORCE\x0a\x0a*Don\x27t\x20forget\x20fork\x20and\x20star\x20repo*\x0a\x0a>\x20*sᴛᴀʀs:*\x20','DD/MM/YYYY','\x0a>\x20*Updated:*\x20','General-Fredi','9905ssOSHY','14760AyzLUQ','*\x0a\x0a®','8yWpWsn','format','76308GSNAfV','https://files.catbox.moe/3o37c5.jpeg'];_0x37cc=function(){return _0x5874c8;};return _0x37cc();}moment['tz']['setDefault'](''+set[_0x5a3d6a(0xec)]),ezra({'nomCom':_0x5a3d6a(0xe2),'categorie':_0x5a3d6a(0xcb)},async(_0x330eb6,_0x588f83,_0x329cf2)=>{const _0x43e1ab=_0x5a3d6a;let {ms:_0x521497}=_0x329cf2;const {time:_0x32d1c5,date:_0x1cdddb}={'time':moment()['format']('HH:mm:ss'),'date':moment()[_0x43e1ab(0xd0)]('DD/MM/YYYY')},_0xfadc51=Math[_0x43e1ab(0xe1)](Math['random']()*0x64)+0x1;try{await _0x588f83[_0x43e1ab(0xe5)](_0x330eb6,{'audio':{'url':_0x43e1ab(0xd9)},'mimetype':_0x43e1ab(0xbf),'ptt':!![],'contextInfo':{'isForwarded':!![],'forwardedNewsletterMessageInfo':{'newsletterJid':_0x43e1ab(0xe7),'newsletterName':'@FrediEzra','serverMessageId':0x8f},'forwardingScore':0x3e7,'externalAdReply':{'title':_0x43e1ab(0xe9),'body':_0x43e1ab(0xe3)+_0xfadc51+_0x43e1ab(0xd6)+_0x1cdddb+_0x43e1ab(0xc1)+_0x32d1c5,'thumbnailUrl':_0x43e1ab(0xc0),'mediaType':0x1,'renderSmallThumbnail':!![]}}},{'quoted':_0x521497});}catch(_0x714dc3){console['log'](_0x43e1ab(0xe8)+_0x714dc3),repondre('❌\x20Error:\x20'+_0x714dc3);}}),ezra({'nomCom':_0x5a3d6a(0xde),'categorie':'General-Fredi','reaction':'🫧','nomFichier':__filename},async(_0x2c7c52,_0x24844e,_0xedb14)=>{const _0x43d65b=_0x5a3d6a,{pushname:_0x226e73,repondre:_0x22b8a0}=_0xedb14;try{const _0x248a10=await axios[_0x43d65b(0xc5)]('https://github.com/mr-X-force/LUCKY-MD-XFORCE'),_0x4b7e4b=response[_0x43d65b(0xd8)],_0x476447=moment(_0x4b7e4b[_0x43d65b(0xda)])[_0x43d65b(0xd0)](_0x43d65b(0xc9)),_0x266dcb=_0x43d65b(0xc8)+_0x4b7e4b[_0x43d65b(0xc6)]+'\x0a>\x20*Forks:*\x20'+_0x4b7e4b[_0x43d65b(0xd7)]+'\x0a>\x20*Watchera:*\x20'+_0x4b7e4b[_0x43d65b(0xeb)]+_0x43d65b(0xca)+_0x476447+'\x0a>\x20*Repo\x20Link:*'+_0x4b7e4b['html_url']+_0x43d65b(0xce);await _0x416a12[_0x43d65b(0xe5)](_0x49a80c,{'image':{'url':_0x43d65b(0xc0)},'caption':_0x266dcb,'contextInfo':{'isForwarded':!![],'forwardedNewsletterMessageInfo':{'newsletterJid':_0x43d65b(0xe7),'newsletterName':_0x43d65b(0xe6),'serverMessageId':0x8f},'forwardingScore':0x3e7,'externalAdReply':{'title':_0x43d65b(0xea),'body':'🫧\x20repo\x20link\x20request\x20🫧','thumbnailUrl':_0x43d65b(0xd2),'mediaType':0x1,'mediaUrl':'','sourceUrl':''}}}),await _0x416a12[_0x43d65b(0xe5)](_0x49a80c,{'audio':{'url':'https://files.catbox.moe/j3sp1o.mp3'},'mimetype':_0x43d65b(0xbf),'ptt':!![],'caption':_0x43d65b(0xe0),'contextInfo':{'isForwarded':!![],'forwardedNewsletterMessageInfo':{'newsletterJid':_0x43d65b(0xe7),'newsletterName':_0x43d65b(0xe6),'serverMessageId':-0x1}}});}catch(_0x3b161d){console[_0x43d65b(0xdb)](_0x43d65b(0xc7),error),_0x3595c5(_0x43d65b(0xe4));}});
+'use strict';
+
+const { ezra } = require("../fredi/ezra");
+const axios = require('axios');
+const moment = require("moment-timezone");
+const set = require(__dirname + '/../set');
+moment.tz.setDefault('' + set.TIMEZONE);
+
+ezra({
+  'nomCom': "ping",
+  'categorie': "General-Fredi"
+}, async (_0x12a838, _0x2d8d4e, _0x1f0ba4) => {
+  let {
+    ms: _0x5d2f0c
+  } = _0x1f0ba4;
+  const {
+    time: _0xb5466b,
+    date: _0x4c687e
+  } = {
+    'time': moment().format("HH:mm:ss"),
+    'date': moment().format("DD/MM/YYYY")
+  };
+  const _0x4950ba = Math.floor(Math.random() * 0x64) + 0x1;
+  try {
+    await _0x2d8d4e.sendMessage(_0x12a838, {
+      'audio': {
+        'url': "https://files.catbox.moe/se9mii.mp3"
+      },
+      'mimetype': "audio/mp4",
+      'ptt': true,
+      'contextInfo': {
+        'isForwarded': true,
+        'forwardedNewsletterMessageInfo': {
+          'newsletterJid': "120363313124070136@newsletter",
+          'newsletterName': "@FrediEzra",
+          'serverMessageId': 0x8f
+        },
+        'forwardingScore': 0x3e7,
+        'externalAdReply': {
+          'title': "LUCKY-MD-XFORCE",
+          'body': "⚫ Pong: " + _0x4950ba + "ms\n📅 *Date:* " + _0x4c687e + "\n⏰ *Time:* " + _0xb5466b,
+          'thumbnailUrl': "https://files.catbox.moe/uw4l17.jpeg",
+          'mediaType': 0x1,
+          'renderSmallThumbnail': true
+        }
+      }
+    }, {
+      'quoted': _0x5d2f0c
+    });
+  } catch (_0x1149fe) {
+    console.log("❌ Ping Command Error: " + _0x1149fe);
+    repondre("❌ Error: " + _0x1149fe);
+  }
+});
+
+
+ezra({
+    nomCom: "repo", 
+    categorie: "General-Fredi", 
+    reaction: "🫧", 
+    nomFichier: __filename 
+}, async (dest, zk, commandeOptions) => {
+    const { pushname, repondre } = commandeOptions;
+    const githubRepo = 'https://api.github.com/repos/mr-X-force/LUCKY-MD-XFORCE';
+    try {
+        const response = await axios.get(githubRepo);
+        const data = response.data;
+
+        const created = moment(data.created_at).format("DD/MM/YYYY");
+        const updated = moment(data.updated_at).format("DD/MM/YYYY");
+
+        const gitdata = `> *ɴᴀᴍᴇ:    ${conf.BOT}*\n\n> *sᴛᴀʀs:*  ${data.stargazers_count}\n\n> *ғᴏʀᴋs:*  ${data.forks_count}\n\n> *ᴡᴀᴛᴄʜᴇʀs:*  ${data.watchers}\n\n> *ᴜᴘᴅᴀᴛᴇᴅ:*  ${updated}\n\n> *Repo ${data.html_url}*
+
+
+Powered By FrediEzra Tech Info`;
+    await zk.sendMessage(desk, {
+      'image': {
+        'url': 'https://files.catbox.moe/uw4l17.jpeg'
+      },
+      'caption': gitdata,
+      'contextInfo': {
+        'isForwarded': true,
+        'forwardedNewsletterMessageInfo': {
+          'newsletterJid': '120363313124070136@newsletter',
+          'newsletterName': "@FrediEzra",
+          'serverMessageId': -1
+        },
+        'forwardingScore': 999,
+        'externalAdReply': {
+          'title': "LUCKY MD XFORCE",
+          'body': "🫧 repo link request 🫧",
+          'thumbnailUrl': "https://files.catbox.moe/3o37c5.jpeg",
+          'mediaType': 1,
+          'mediaUrl': '',
+          'sourceUrl': ''
+        }
+      }
+    });
+    await zk.sendMessage(desk, {
+      'audio': {
+        'url': "https://files.catbox.moe/j3sp1o.mp3"
+      },
+      'mimetype': "audio/mp4",
+      'ptt': true,
+      'caption': "*🫧 Lucky Xforce repo song 🫧",
+      'contextInfo': {
+        'isForwarded': true,
+        'forwardedNewsletterMessageInfo': {
+          'newsletterJid': "120363313124070136@newsletter",
+          'newsletterName': "@FrediEzra",
+          'serverMessageId': -1
+        }
+      }
+    });
+  } catch (e) {
+        console.log("Error fetching data:", error);
+        repondre("❌ Error fetching repository data. Please try again later.");
+    }
+});
