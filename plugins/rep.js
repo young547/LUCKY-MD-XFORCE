@@ -55,65 +55,61 @@ ezra({
 
 
 ezra({
-    nomCom: "repo", 
-    categorie: "General-Fredi", 
-    reaction: "🫧", 
-    nomFichier: __filename 
+  nomCom: "repo",
+  categorie: "General-Fredi",
+  reaction: "🫧",
+  nomFichier: __filename
 }, async (dest, zk, commandeOptions) => {
-    const { pushname, repondre } = commandeOptions;
-    const githubRepo = 'https://api.github.com/repos/mr-X-force/LUCKY-MD-XFORCE';
-    try {
-        const response = await axios.get(githubRepo);
-        const data = response.data;
+  const { pushname, repondre } = commandeOptions;
+  const githubRepo = 'https://api.github.com/repos/mr-X-force/LUCKY-MD-XFORCE';
 
-        const created = moment(data.created_at).format("DD/MM/YYYY");
-        const updated = moment(data.updated_at).format("DD/MM/YYYY");
+  try {
+    const response = await axios.get(githubRepo);
+    const data = response.data;
 
-        const gitdata = `> *ɴᴀᴍᴇ:    ${conf.BOT}*\n\n> *sᴛᴀʀs:*  ${data.stargazers_count}\n\n> *ғᴏʀᴋs:*  ${data.forks_count}\n\n> *ᴡᴀᴛᴄʜᴇʀs:*  ${data.watchers}\n\n> *ᴜᴘᴅᴀᴛᴇᴅ:*  ${updated}\n\n> *Repo ${data.html_url}*
+    const created = moment(data.created_at).format("DD/MM/YYYY");
+    const updated = moment(data.updated_at).format("DD/MM/YYYY");
 
+    const gitdata = `> *ɴᴀᴍᴇ:*    ${conf.BOT}\n\n> *sᴛᴀʀs:*  ${data.stargazers_count}\n\n> *ғᴏʀᴋs:*  ${data.forks_count}\n\n> *ᴡᴀᴛᴄʜᴇʀs:*  ${data.watchers}\n\n> *ᴜᴘᴅᴀᴛᴇᴅ:*  ${updated}\n\n> *Repo:* ${data.html_url}\n\n_Powered by FrediEzra Tech Info_`;
 
-Powered By FrediEzra Tech Info`;
-    await zk.sendMessage(desk, {
-      'image': {
-        'url': 'https://files.catbox.moe/uw4l17.jpeg'
-      },
-      'caption': gitdata,
-      'contextInfo': {
-        'isForwarded': true,
-        'forwardedNewsletterMessageInfo': {
-          'newsletterJid': '120363313124070136@newsletter',
-          'newsletterName': "@FrediEzra",
-          'serverMessageId': -1
+    await zk.sendMessage(dest, {
+      image: { url: 'https://files.catbox.moe/uw4l17.jpeg' },
+      caption: gitdata,
+      contextInfo: {
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: '120363313124070136@newsletter',
+          newsletterName: "@FrediEzra",
+          serverMessageId: -1
         },
-        'forwardingScore': 999,
-        'externalAdReply': {
-          'title': "LUCKY MD XFORCE",
-          'body': "🫧 repo link request 🫧",
-          'thumbnailUrl': "https://files.catbox.moe/3o37c5.jpeg",
-          'mediaType': 1,
-          'mediaUrl': '',
-          'sourceUrl': ''
+        forwardingScore: 999,
+        externalAdReply: {
+          title: "LUCKY MD XFORCE",
+          body: "🫧 repo link request 🫧",
+          thumbnailUrl: "https://files.catbox.moe/3o37c5.jpeg",
+          mediaType: 1,
+          sourceUrl: data.html_url || "https://github.com/mr-X-force/LUCKY-MD-XFORCE"
         }
       }
     });
-    await zk.sendMessage(desk, {
-      'audio': {
-        'url': "https://files.catbox.moe/j3sp1o.mp3"
-      },
-      'mimetype': "audio/mp4",
-      'ptt': true,
-      'caption': "*🫧 Lucky Xforce repo song 🫧",
-      'contextInfo': {
-        'isForwarded': true,
-        'forwardedNewsletterMessageInfo': {
-          'newsletterJid': "120363313124070136@newsletter",
-          'newsletterName': "@FrediEzra",
-          'serverMessageId': -1
+
+    await zk.sendMessage(dest, {
+      audio: { url: "https://files.catbox.moe/j3sp1o.mp3" },
+      mimetype: "audio/mp4",
+      ptt: true,
+      caption: "*🫧 Lucky Xforce repo song 🫧",
+      contextInfo: {
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: "120363313124070136@newsletter",
+          newsletterName: "@FrediEzra",
+          serverMessageId: -1
         }
       }
     });
+
   } catch (e) {
-        console.log("Error fetching data:", error);
-        repondre("❌ Error fetching repository data. Please try again later.");
-    }
+    console.error("Error fetching data:", e);
+    await repondre("❌ Error fetching repository data. Please try again later.");
+  }
 });
