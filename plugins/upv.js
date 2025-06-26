@@ -97,10 +97,7 @@ ezra({
     }, { quoted: ms });
 
     const apis = [
-      `https://api.davidcyriltech.my.id/download/ytmp3?url=${encodeURIComponent(video.url)}`,
-      `https://www.dark-yasiya-api.site/download/ytmp3?url=${encodeURIComponent(video.url)}`,
-      `https://api.giftedtech.web.id/api/download/dlmp3?url=${encodeURIComponent(video.url)}&apikey=gifted-md`,
-      `https://api.dreaded.site/api/ytdl/audio?url=${encodeURIComponent(video.url)}`
+      `https://apis-keith.vercel.app/search/yts?query=${encodeURIComponent(query)}`
     ];
 
     const downloadData = await downloadFromApis(apis);
@@ -110,15 +107,15 @@ ezra({
       {
         audio: { url: download_url },
         mimetype: 'audio/mp4',
-        caption: `🎵 *${title}*`,
-        contextInfo: getContextInfo(title, userJid, video.thumbnail)
+        caption: `🎵 *${video.title}*`,
+        contextInfo: getContextInfo(video.title, userJid, video.thumbnail)
       },
       {
         document: { url: download_url },
         mimetype: 'audio/mpeg',
-        fileName: `${title}.mp3`.replace(/[^\w\s.-]/gi, ''),
-        caption: `📁 *${title}* (Document)`,
-        contextInfo: getContextInfo(title, userJid, video.thumbnail)
+        fileName: `${video.title}.mp3`.replace(/[^\w\s.-]/gi, ''),
+        caption: `📁 *${video.title}* (Document)`,
+        contextInfo: getContextInfo(video.title, userJid, video.thumbnail)
       }
     ];
 
