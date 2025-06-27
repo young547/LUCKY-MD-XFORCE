@@ -2,79 +2,93 @@ const { ezra } = require("../fredi/ezra");
 const axios = require('axios');
 const ytSearch = require('yt-search');
 const conf = require(__dirname + '/../set');
-const { Catbox } = require("node-catbox");
-const fs = require('fs-extra');
 const { repondre } = require(__dirname + "/../fredi/context");
 
-// Initialize Catbox
-const catbox = new Catbox();
-
-// Common contextInfo configuration
-const getContextInfo = (title = '', userJid = '', thumbnailUrl = '') => ({
+// ContextInfo configuration
+const getContextInfo = (title = '', userJid = '', thumbnailUrl = '', sourceUrl = '') => ({
   mentionedJid: [userJid],
   forwardingScore: 999,
   isForwarded: true,
   forwardedNewsletterMessageInfo: {
-    newsletterJid: "120363313124070136@newsletter",
-    newsletterName: "@FrediEzra",
+    newsletterJid: "120363266249040649@newsletter",
+    newsletterName: "Keith Support 🔥",
     serverMessageId: Math.floor(100000 + Math.random() * 900000),
   },
   externalAdReply: {
     showAdAttribution: true,
-    title: conf.BOT || 'Lucky Downloader',
+    title: conf.BOT || 'Music Downloader',
     body: title || "Media Downloader",
     thumbnailUrl: thumbnailUrl || conf.URL || '',
-    sourceUrl: conf.GURL || '',
+    sourceUrl: sourceUrl || '',
     mediaType: 1,
     renderLargerThumbnail: false
   }
 });
 
-// Function to upload a file to Catbox and return the URL
-async function uploadToCatbox(filePath) {
+// Search Functions
+const searchSpotify = async (query) => {
   try {
-    if (!fs.existsSync(filePath)) {
-      throw new Error("File does not exist");
-    }
-    const uploadResult = await catbox.uploadFile({ path: filePath });
-    return uploadResult || null;
-  } catch (error) {
-    console.error('Catbox upload error:', error);
-    throw new Error(`Failed to upload file: ${error.message}`);
+    const response = await axios.get(`https://apis-keith.vercel.app/search/spotify?q=${encodeURIComponent(query)}`);
+    return response.data?.status && response.data.result?.length ? { platform: 'spotify', ...response.data.result[0] } : null;
+  } catch {
+    return null;
   }
-}
+};
 
-// Common function for YouTube search
-async function searchYouTube(query) {
+const searchSoundCloud = async (query) => {
   try {
-    const searchResults = await ytSearch(query);
-    if (!searchResults?.videos?.length) {
-      throw new Error('No video found for the specified query.');
-    }
-    return searchResults.videos[0];
-  } catch (error) {
-    console.error('YouTube search error:', error);
-    throw new Error(`YouTube search failed: ${error.message}`);
+    const response = await axios.get(`https://apis-keith.vercel.app/search/soundcloud?q=${encodeURIComponent(query)}`);
+    const tracks = response.data?.result?.result?.filter(track => track.timestamp) || [];
+    return tracks.length ? { platform: 'soundcloud', ...tracks[0] } : null;
+  } catch {
+    return null;
   }
-}
+};
 
-// Common function for downloading media from APIs
-async function downloadFromApis(apis) {
-  for (const api of apis) {
-    try {
-      const response = await axios.get(api, { timeout: 15000 });
-      if (response.data?.success) {
-        return response.data;
-      }
-    } catch (error) {
-      console.warn(`API ${api} failed:`, error.message);
-      continue;
-    }
+const searchYouTube = async (query) => {
+  try {
+    const { videos } = await ytSearch(query);
+    return videos?.length ? { platform: 'youtube', title: videos[0].title, url: videos[0].url, thumbnail: videos[0].thumbnail } : null;
+  } catch {
+    return null;
   }
-  throw new Error('Failed to retrieve download URL from all sources.');
-}
+};
 
-// Audio download command
+// Download Functions
+const downloadSpotify = async (url) => {
+  try {
+    const response = await axios.get(`https://api.siputzx.my.id/api/d/spotify?url=${encodeURIComponent(url)}`);
+    return response.data?.status && response.data.data?.download
+      ? { downloadUrl: response.data.data.download, format: 'mp3', artist: response.data.data.artis, thumbnail: response.data.data.image }
+      : null;
+  } catch {
+    return null;
+  }
+};
+
+const downloadSoundCloud = async (url) => {
+  try {
+    const response = await axios.get(`https://apis-keith.vercel.app/download/soundcloud?url=${encodeURIComponent(url)}`);
+    return response.data?.status && response.data.result?.track?.downloadUrl
+      ? { downloadUrl: response.data.result.track.downloadUrl, format: 'mp3' }
+      : null;
+  } catch {
+    return null;
+  }
+};
+
+const downloadYouTube = async (url) => {
+  try {
+    const response = await axios.get(`https://apis-keith.vercel.app/download/dlmp3?url=${encodeURIComponent(url)}`);
+    return response.data?.status && response.data.result?.downloadUrl
+      ? { downloadUrl: response.data.result.downloadUrl, format: 'mp3' }
+      : null;
+  } catch {
+    return null;
+  }
+};
+
+//Main Command
 ezra({
   nomCom: "play",
   aliases: ["song", "playdoc", "audio", "mp3"],
@@ -83,144 +97,58 @@ ezra({
 }, async (dest, zk, commandOptions) => {
   const { arg, ms, userJid } = commandOptions;
 
-  try {
-    if (!arg[0]) {
-      return repondre(zk, dest, ms, "Please provide a song name.");
-    }
+  if (!arg[0]) return repondre(zk, dest, ms, "Please provide a song name or URL.");
 
-    const query = arg.join(" ");
-    const video = await searchYouTube(query);
-    
+  const query = arg.join(" ");
+  let track, downloadData;
+
+  // Determine platform priority (YouTube → SoundCloud → Spotify)
+  const platforms = [];
+  if (query.includes('youtube.com') || query.includes('youtu.be')) platforms.push('youtube');
+  if (query.includes('soundcloud.com')) platforms.push('soundcloud');
+  if (query.includes('spotify.com')) platforms.push('spotify');
+  
+  if (platforms.length === 0) platforms.push('youtube', 'soundcloud', 'spotify');
+
+  for (const platform of platforms) {
+    try {
+      const searchFn = { 'youtube': searchYouTube, 'soundcloud': searchSoundCloud, 'spotify': searchSpotify }[platform];
+      track = await searchFn(query);
+      if (!track) continue;
+
+      const downloadFn = { 'youtube': downloadYouTube, 'soundcloud': downloadSoundCloud, 'spotify': downloadSpotify }[platform];
+      downloadData = await downloadFn(track.url);
+      if (downloadData) break;
+    } catch (error) {
+      console.error(`${platform} error:`, error);
+      continue;
+    }
+  }
+
+  if (!track || !downloadData) {
+    return repondre(zk, dest, ms, "❌ Failed to find or download the track from all platforms.");
+  }
+
+  const artist = downloadData.artist || track.artist || 'Unknown Artist';
+  const thumbnail = downloadData.thumbnail || track.thumbnail || track.thumb || '';
+  const fileName = `${track.title} - ${artist}.${downloadData.format}`.replace(/[^\w\s.-]/gi, '');
+
+  try {
     await zk.sendMessage(dest, {
-      text: "⬇️ Downloading audio... This may take a moment...",
-      contextInfo: getContextInfo("Downloading", userJid, video.thumbnail)
+      audio: { url: downloadData.downloadUrl },
+      mimetype: `audio/mp4`,
+      contextInfo: getContextInfo(track.title, userJid, thumbnail, track.url)
     }, { quoted: ms });
 
-    const apis = [
-      `https://apis-keith.vercel.app/search/yts?query=${encodeURIComponent(query)}`
-    ];
-
-    const downloadData = await downloadFromApis(apis);
-    const { download_url, title } = downloadData.result;
-
-    const messagePayloads = [
-      {
-        audio: { url: download_url },
-        mimetype: 'audio/mp4',
-        caption: `🎵 *${video.title}*`,
-        contextInfo: getContextInfo(video.title, userJid, video.thumbnail)
-      },
-      {
-        document: { url: download_url },
-        mimetype: 'audio/mpeg',
-        fileName: `${video.title}.mp3`.replace(/[^\w\s.-]/gi, ''),
-        caption: `📁 *${video.title}* (Document)`,
-        contextInfo: getContextInfo(video.title, userJid, video.thumbnail)
-      }
-    ];
-
-    for (const payload of messagePayloads) {
-      await zk.sendMessage(dest, payload, { quoted: ms });
-    }
-
-  } catch (error) {
-    console.error('Audio download error:', error);
-    repondre(zk, dest, ms, `Download failed: ${error.message}`);
-  }
-});
-
-// Video download command
-ezra({
-  nomCom: "video",
-  aliases: ["videodoc", "film", "mp4"],
-  categorie: "Fredi-Download",
-  reaction: "🎥"
-}, async (dest, zk, commandOptions) => {
-  const { arg, ms, userJid } = commandOptions;
-
-  try {
-    if (!arg[0]) {
-      return repondre(zk, dest, ms, "Please provide a video name.");
-    }
-
-    const query = arg.join(" ");
-    const video = await searchYouTube(query);
-    
     await zk.sendMessage(dest, {
-      text: "⬇️ Downloading video... This may take a moment...",
-      contextInfo: getContextInfo("Downloading", userJid, video.thumbnail)
+      document: { url: downloadData.downloadUrl },
+      mimetype: `audio/${downloadData.format}`,
+      fileName: fileName,
+      caption: `📁 *${track.title}* by ${artist} (Document)`,
+      contextInfo: getContextInfo(track.title, userJid, thumbnail, track.url)
     }, { quoted: ms });
-
-    const apis = [
-      `https://api.davidcyriltech.my.id/download/ytmp4?url=${encodeURIComponent(video.url)}`,
-      `https://www.dark-yasiya-api.site/download/ytmp4?url=${encodeURIComponent(video.url)}`,
-      `https://api.giftedtech.web.id/api/download/dlmp4?url=${encodeURIComponent(video.url)}&apikey=gifted-md`,
-      `https://api.dreaded.site/api/ytdl/video?url=${encodeURIComponent(video.url)}`
-    ];
-
-    const downloadData = await downloadFromApis(apis);
-    const { download_url, title } = downloadData.result;
-
-    const messagePayloads = [
-      {
-        video: { url: download_url },
-        mimetype: 'video/mp4',
-        caption: `🎥 *${title}*`,
-        contextInfo: getContextInfo(title, userJid, video.thumbnail)
-      },
-      {
-        document: { url: download_url },
-        mimetype: 'video/mp4',
-        fileName: `${title}.mp4`.replace(/[^\w\s.-]/gi, ''),
-        caption: `📁 *${title}* (Document)`,
-        contextInfo: getContextInfo(title, userJid, video.thumbnail)
-      }
-    ];
-
-    for (const payload of messagePayloads) {
-      await zk.sendMessage(dest, payload, { quoted: ms });
-    }
-
   } catch (error) {
-    console.error('Video download error:', error);
-    repondre(zk, dest, ms, `Download failed: ${error.message}`);
-  }
-});
-
-// URL upload command
-ezra({
-  nomCom: 'url-link',
-  categorie: "Fredi-Download",
-  reaction: '👨🏿‍💻'
-}, async (dest, zk, commandOptions) => {
-  const { msgRepondu, userJid, ms } = commandOptions;
-
-  try {
-    if (!msgRepondu) {
-      return repondre(zk, dest, ms, "Please mention an image, video, or audio.");
-    }
-
-    const mediaTypes = [
-      'videoMessage', 'gifMessage', 'stickerMessage',
-      'documentMessage', 'imageMessage', 'audioMessage'
-    ];
-
-    const mediaType = mediaTypes.find(type => msgRepondu[type]);
-    if (!mediaType) {
-      return repondre(zk, dest, ms, "Unsupported media type.");
-    }
-
-    const mediaPath = await zk.downloadAndSaveMediaMessage(msgRepondu[mediaType]);
-    const fileUrl = await uploadToCatbox(mediaPath);
-    fs.unlinkSync(mediaPath);
-
-    await zk.sendMessage(dest, {
-      text: `✅ Here's your file URL:\n${fileUrl}`,
-      contextInfo: getContextInfo("Upload Complete", userJid)
-    });
-
-  } catch (error) {
-    console.error("Upload error:", error);
-    repondre(zk, dest, ms, `Upload failed: ${error.message}`);
+    console.error('Message sending error:', error);
+    repondre(zk, dest, ms, "⚠️ Track downloaded but failed to send. Please try again.");
   }
 });
