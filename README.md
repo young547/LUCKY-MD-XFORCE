@@ -44,7 +44,7 @@
 [![Railway](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/railway.svg)](https://railway.app/new) <details><summary>Step-by-step</summary><ul><li>Open link</li><li>Click **Deploy from GitHub repo**</li><li>Select this repo</li><li>Go to variables tab → add SESSION_ID, AUTOBIO etc.</li><li>Deploy</li></ul></details>
 
 ## RENDER
-[![Render](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/render.svg)](https://dashboard.render.com/web/new) <details><summary>Step-by-step</summary><ul><li>Open Render dashboard</li><li>Click **New Web Service**</li><li>Connect your GitHub</li><li>Choose this repo</li><li>Add build/start command & ENV vars</li><li>Click **Create Web Service**</li></ul></details>
+[![Render](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/wakand.svg)](https://dashboard.render.com/web/new) <details><summary>Step-by-step</summary><ul><li>Open Render dashboard</li><li>Click **New Web Service**</li><li>Connect your GitHub</li><li>Choose this repo</li><li>Add build/start command & ENV vars</li><li>Click **Create Web Service**</li></ul></details>
 
 ## NETLIFY
 [![Netlify](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/netlify.svg)](https://app.netlify.com/) <details><summary>Step-by-step</summary><ul><li>Use for frontend session site only</li><li>Drag/drop or link repo with index.html</li><li>Publish to host session UI</li></ul></details>
