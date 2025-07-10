@@ -31,7 +31,7 @@
 > Required before deploying the bot:
 
 <a href='https://lucky-xforce-session-site.onrender.com' target="_blank">
-  <img src='https://img.shields.io/badge/PAIR_CODE_1-800080?style=for-the-badge&logo=qr&logoColor=white&labelColor=000000'/>
+  <img src='https://img.shields.io/badge/PAIR_CODE_1-800080?style=for-the-badge&logo=facebook&logoColor=white&labelColor=000000'/>
 </a>
 
 ---
