@@ -20,12 +20,18 @@
 
 ---
 
+## 🍽️🌟 Fork And Star My repo
+
+<a href='https://github.com/mr-X-force/LUCKY-MD-XFORCE/fork' target="_blank">
+  <img src='https://img.shields.io/badge/FORK REPO-800080?style=for-the-badge&logo=github&logoColor=white&labelColor=000000'/>
+</a>
+
 ## 📌 GET YOUR SESSION ID
 
 > Required before deploying the bot:
 
 <a href='https://lucky-xforce-session-site.onrender.com' target="_blank">
-  <img src='https://img.shields.io/badge/PAIR_CODE_1-800080?style=for-the-badge&logo=matrix&logoColor=white&labelColor=000000'/>
+  <img src='https://img.shields.io/badge/PAIR_CODE_1-800080?style=for-the-badge&logo=qr&logoColor=white&labelColor=000000'/>
 </a>
 
 ---
