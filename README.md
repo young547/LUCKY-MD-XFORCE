@@ -39,7 +39,7 @@
 ## 🚀 DEPLOY LUCKY MD XFORCE BOT TO YOUR HOST
 
 # DOWLOAD ZIP FOR PANEL
-[![`LUCKY XFORCE ZIP`](https://github.com/mr-X-force/LUCKY-MD-XFORCE/archive/refs/heads/main.zip)] ***all vars setting in [![set.js]()]***
+[![`LUCKY XFORCE ZIP`](`LUCKY XFORCE ZIP`)](https://github.com/mr-X-force/LUCKY-MD-XFORCE/archive/refs/heads/main.zip) ***all vars setting in [set.js]()***
 
 ## HEROKU
 [![Heroku](https://raw.githubusercontent.com/mr-X-force/LUCKY-MD-XFORCE/main/media/heroku.svg)](https://lucky-md-xforce-deploy-your-bot-with-your-github-username.vercel.app) <details><summary>Step-by-step</summary><ul><li>Fork this repo</li><li>Click Heroku button above</li><li>Connect your GitHub and select this repo</li><li>Set config vars like SESSION_ID</li><li>Click **Deploy App**</li></ul></details>
