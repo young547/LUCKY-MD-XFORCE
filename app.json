@@ -1,6 +1,6 @@
 {
-  "name": "LUCKY-MD-XFORCE MULT DEVICE",
-  "description": "LUCKY-MD-⁠XFORCE Whatsapp device bot made by FrediEzra to help Whatsapp users to enjoy while helping...",
+  "name": "💦LUCKY-MD-XFORCE💨 MULTI DEVICE",
+  "description": "💦LUCKY-MD-⁠XFORCE💨 Whatsapp device bot made by FrediEzra Tech Info to help Whatsapp users to enjoy while helping...",
   "keywords": [
     "bot",
     "node",
@@ -29,7 +29,12 @@
       "required":false
     },
     "AUTO_REPLY": {
-      "description": "when enabled it automatically sends  auto reply message to members in your pm",
+      "description": "when enabled it automatically sends  auto reply message in your chats for mentioned words",
+      "value": "no",
+      "required": false
+    },
+    "GREET_MESSAGE": {
+      "description": "when enabled it automatically sends  greet message to members in your pm if you're not available",
       "value": "no",
       "required": false
     },
@@ -43,8 +48,7 @@
       "value": "yes",
       "required": false
     },
-      "AUTO_SAVE_CONTACTS":
-    {
+    "AUTO_SAVE_CONTACTS": {
       "description":"Enter yes for your bot to auto save contacts",
       "value":"no",
       "required":false
@@ -61,7 +65,7 @@
     },
     "AUTO_STATUS_TEXT": {
       "description": "type your genuine status message",
-      "value": "💲YOUR STATUS VIEWED BY ☢️LUCKY-MD-⁠XFORCE☢️ SUCCESSFUL 😇✅✅",
+      "value": "💲YOUR STATUS VIEWED BY 💦LUCKY-MD-⁠XFORCE💨 SUCCESSFUL 😇✅✅",
       "required": false
     },
     "AUTO_STATUS_REPLY": {
@@ -71,7 +75,7 @@
     },
     "BOT_NAME": {
       "description": "you must give a name for you bot uhh??!!",
-      "value": "☢️LUCKY-MD-XFORCE☢️",
+      "value": "💦LUCKY-MD-XFORCE💨",
       "required": false 
     },
     "CHAT_BOT": {
@@ -156,6 +160,26 @@
     },
     "AUTO_BLOCK": {
       "description": "Type true if you want bot to automatically  block those who spam your dm ",
+      "value": "no",
+      "required": false
+    },
+   "AUTO_REACT_HOME_MESSAGE": {
+     "description": "Set 'yes' to enable bot reactions to owner messages in chats",
+     "value": "no",
+     "required": false
+    },
+    "AUTO_REACT_AWAY_MESSAGE": {
+      "description": "Set 'yes' to enable bot reactions to messages in away message (private) chats",
+      "value": "no",
+      "required": false
+    },
+    "AUTO_REACT_GROUP_MESSAGE": {
+      "description": "Set 'yes' to enable bot reactions to messages in group chats",
+      "value": "no",
+      "required": false
+    },
+    "AUTO_STICKER": {
+      "description": "Set 'yes' to enable bot to send sticker if it detect available keys word",
       "value": "no",
       "required": false
     },
