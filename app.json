@@ -9,8 +9,8 @@
   ],
   "logo": "https://files.catbox.moe/uw4l17.jpeg",
   "repository": "https://github.com/mr-X-force/LUCKY-MD-XFORCE",
-  "succes_url": "/",
-  "stack": "container",
+  "succes_url":"/",
+  "stack":"heroku-24",
   "env": {
     "PREFIX": {
       "description": "Choose your bot's prefix",
@@ -30,11 +30,6 @@
     },
     "AUTO_REPLY": {
       "description": "when enabled it automatically sends  auto reply message in your chats for mentioned words",
-      "value": "no",
-      "required": false
-    },
-    "GREET_MESSAGE": {
-      "description": "when enabled it automatically sends  greet message to members in your pm if you're not available",
       "value": "no",
       "required": false
     },
@@ -73,18 +68,8 @@
       "value": "no",
       "required": false
     },
-    "BOT_NAME": {
-      "description": "you must give a name for you bot uhh??!!",
-      "value": "💦LUCKY-MD-XFORCE💨",
-      "required": false 
-    },
     "CHAT_BOT": {
       "description": "urs if you want bot to chat automatic in inbox",
-      "value": "no",
-      "required": false
-    },
-    "VOICE_CHATBOT_INBOX": {
-      "description": "urs if you want bot to voice chat inbox with",
       "value": "no",
       "required": false
     },
@@ -113,11 +98,6 @@
       "value": "FrediEzra",
       "required": false
     },
-    "URL": {
-      "description": "you must add your bot image url.Get your image url now and fill it here",
-      "value": "https://files.catbox.moe/3o37c5.jpeg",
-      "required": true
-    },
     "AUTO_READ_MESSAGES": {
       "description": "yes toactivate no to deactivate",
       "value": "no",
@@ -126,11 +106,6 @@
     "NUMERO_OWNER": {
       "description": "Your phone number (exclude '+' and area code, e.g., '255752593977')",
       "value": "255752593977",
-      "required": false
-    },
-    "WARN_COUNT": {
-      "description": "Set the warning limit for warning commands",
-      "value": "5",
       "required": false
     },
     "STARTING_BOT_MESSAGE": {
@@ -148,11 +123,6 @@
       "value": "no",
       "required": false
     },
-    "ANTI_DELETE_GROUP": {
-      "description": "Enable anti-delete message in group's (set 'yes' to activate or 'no' to deactivate)",
-      "value": "no",
-      "required": false
-    },
     "ANTI_CALL": {
       "description": "Automatically decline incoming calls (set 'on' to activate or 'off' to deactivate)",
       "value": "yes",
@@ -163,41 +133,23 @@
       "value": "no",
       "required": false
     },
-   "AUTO_REACT_HOME_MESSAGE": {
-     "description": "Set 'yes' to enable bot reactions to owner messages in chats",
-     "value": "no",
-     "required": false
-    },
-    "AUTO_REACT_AWAY_MESSAGE": {
-      "description": "Set 'yes' to enable bot reactions to messages in away message (private) chats",
-      "value": "no",
-      "required": false
-    },
-    "AUTO_REACT_GROUP_MESSAGE": {
-      "description": "Set 'yes' to enable bot reactions to messages in group chats",
-      "value": "no",
-      "required": false
-    },
-    "AUTO_STICKER": {
-      "description": "Set 'yes' to enable bot to send sticker if it detect available keys word",
-      "value": "no",
-      "required": false
-    },
     "AUTO_REACTION": {
       "description": "Set 'yes' to enable bot reactions to messages in private chats",
       "value": "no",
       "required": false
     }
   },
-  "formation": {
-    "worker": {
-      "quantity": 1,
-      "size": "standard-2x"
-    }
-  },
-  "addons": [
+	
+ 
+	  "buildpacks": [
     {
-      "plan": "heroku-postgresql:essential-0"
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
     }
   ]
 }
